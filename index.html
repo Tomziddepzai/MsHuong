@@ -198,10 +198,10 @@
 </div>
 
 <header>
-  <div class="header-logo">Study<span>Shop</span> 🎒</div>
+  <div class="header-logo">MSHUONG<span>SHOP</span> 🎒</div>
   <div class="header-right">
     <div class="user-chip" id="user-chip">👤 Khách</div>
-    <button class="admin-btn" onclick="openAdminLogin()">⚙️ Admin</button>
+    <button class="admin-btn" onclick="openAdminLogin()">⚙️</button>
     <button class="cart-btn" onclick="toggleCart()">
       🛒 Giỏ hàng <div class="cart-count" id="cart-count">0</div>
     </button>
@@ -228,7 +228,7 @@
   <div class="cart-footer">
     <div class="cart-total"><span>Tổng cộng:</span><strong id="cart-total">0đ</strong></div>
     <textarea class="note-input" id="order-note" placeholder="Ghi chú (địa chỉ, yêu cầu...)" rows="2"></textarea>
-    <button class="order-btn" id="order-btn" onclick="sendOrder()" disabled>📲 Đặt hàng qua Telegram</button>
+    <button class="order-btn" id="order-btn" onclick="sendOrder()" disabled>📲 Đặt Hàng</button>
   </div>
 </div>
 
@@ -236,7 +236,7 @@
   <div class="popup-box">
     <span class="big">🎉</span>
     <h3>Đặt hàng thành công!</h3>
-    <p>Đơn hàng đã gửi đến shop.<br>Chúng mình sẽ liên hệ số <strong id="confirm-phone"></strong> sớm nhất nhé!</p>
+    <p>Đơn hàng đã gửi đến cô Hường.<br>Cô sẽ liên hệ số <strong id="confirm-phone"></strong> sớm nhất nhé!</p>
     <button class="btn-ok" onclick="closePopup('popup-success')">🛍️ Tiếp tục mua sắm</button>
   </div>
 </div>
@@ -245,12 +245,12 @@
   <div class="popup-box">
     <span class="big">😔</span>
     <h3>Gửi đơn thất bại!</h3>
-    <p>Không thể kết nối Telegram.<br>Có thể do <strong>mạng yếu</strong> hoặc <strong>token chưa đúng</strong>.</p>
+    <p>Không thể kết nối.<br>Có thể do <strong>mạng yếu</strong>.</p>
     <div class="fail-actions">
       <button class="btn-retry" onclick="retryOrder()">🔄 Thử lại</button>
       <button class="btn-dismiss" onclick="closePopup('popup-fail')">Đóng</button>
     </div>
-    <p class="fail-hint">Kiểm tra BOT_TOKEN và kết nối mạng</p>
+    <p class="fail-hint">Kiểm tra kết nối mạng</p>
   </div>
 </div>
 

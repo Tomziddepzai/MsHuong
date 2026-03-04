@@ -472,25 +472,21 @@ async function doSendTelegram(msg, total) {
   const btn = document.getElementById('order-btn');
   btn.disabled = true; btn.textContent = '⏳ Đang gửi...';
 
-  // Telegram API hỗ trợ GET, dùng no-cors để bypass CORS trên browser
-  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`
+  const telegramUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`
     + `?chat_id=${encodeURIComponent(CHAT_ID)}`
     + `&text=${encodeURIComponent(msg)}`;
 
+  // Dùng allorigins proxy để bypass CORS
+  const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(telegramUrl)}`;
+
   let success = false;
   try {
-    // Thử cors trước để đọc response
-    const res = await fetch(url, { method: 'GET', mode: 'cors' });
-    const json = await res.json();
-    success = json.ok === true;
+    const res = await fetch(proxyUrl);
+    const data = await res.json();
+    const inner = JSON.parse(data.contents);
+    success = inner.ok === true;
   } catch(e) {
-    try {
-      // Fallback no-cors: gửi được nhưng không đọc response → coi là thành công
-      await fetch(url, { method: 'GET', mode: 'no-cors' });
-      success = true;
-    } catch(e2) {
-      success = false;
-    }
+    success = false;
   }
 
   btn.disabled = false;

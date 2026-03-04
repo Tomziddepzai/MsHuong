@@ -14,28 +14,12 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Nunito', sans-serif; background: var(--soft); color: var(--text); min-height: 100vh; }
 
-  #overlay {
-    position: fixed; inset: 0; z-index: 999;
-    background: linear-gradient(135deg, #1A1A2E 0%, #16213E 60%, #0F3460 100%);
-    display: flex; align-items: center; justify-content: center;
-    transition: opacity 0.5s ease;
-  }
+  /* OVERLAY */
+  #overlay { position: fixed; inset: 0; z-index: 999; background: linear-gradient(135deg, #1A1A2E 0%, #16213E 60%, #0F3460 100%); display: flex; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
   #overlay.hide { opacity: 0; pointer-events: none; }
-  .login-box {
-    background: white; border-radius: 28px; padding: 48px 40px 40px;
-    width: 100%; max-width: 420px; box-shadow: 0 24px 80px rgba(0,0,0,0.4);
-    position: relative; animation: popIn 0.5s cubic-bezier(.34,1.56,.64,1) both;
-  }
-  @keyframes popIn {
-    from { transform: scale(0.8) translateY(40px); opacity: 0; }
-    to   { transform: scale(1) translateY(0); opacity: 1; }
-  }
-  .login-badge {
-    position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
-    background: var(--primary); color: white; font-family: 'Baloo 2', cursive;
-    font-weight: 800; font-size: 14px; padding: 6px 20px; border-radius: 100px;
-    letter-spacing: 1px; white-space: nowrap; box-shadow: 0 4px 16px rgba(255,107,53,0.4);
-  }
+  .login-box { background: white; border-radius: 28px; padding: 48px 40px 40px; width: 100%; max-width: 420px; box-shadow: 0 24px 80px rgba(0,0,0,0.4); position: relative; animation: popIn 0.5s cubic-bezier(.34,1.56,.64,1) both; }
+  @keyframes popIn { from { transform: scale(0.8) translateY(40px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+  .login-badge { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 14px; padding: 6px 20px; border-radius: 100px; letter-spacing: 1px; white-space: nowrap; box-shadow: 0 4px 16px rgba(255,107,53,0.4); }
   .login-logo { text-align: center; margin-bottom: 8px; }
   .login-logo .emoji { font-size: 52px; display: block; margin-bottom: 4px; }
   .login-logo h1 { font-family: 'Baloo 2', cursive; font-size: 28px; font-weight: 800; color: var(--dark); }
@@ -44,94 +28,50 @@
   .divider { border: none; border-top: 1.5px dashed #eee; margin: 20px 0; }
   .form-group { margin-bottom: 16px; }
   .form-group label { display: block; font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .form-group input {
-    width: 100%; padding: 13px 16px; border: 2px solid #eee; border-radius: 12px;
-    font-family: 'Nunito', sans-serif; font-size: 15px; outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s; background: #fafafa;
-  }
+  .form-group input { width: 100%; padding: 13px 16px; border: 2px solid #eee; border-radius: 12px; font-family: 'Nunito', sans-serif; font-size: 15px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; background: #fafafa; }
   .form-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(255,107,53,0.1); background: white; }
   .form-group input.error { border-color: #FF4757; }
   .error-msg { font-size: 12px; color: #FF4757; margin-top: 5px; display: none; }
   .error-msg.show { display: block; }
-  .btn-enter {
-    width: 100%; padding: 15px; background: linear-gradient(135deg, var(--primary), #FF8C42);
-    color: white; border: none; border-radius: 14px; font-family: 'Baloo 2', cursive;
-    font-size: 17px; font-weight: 700; cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 6px 20px rgba(255,107,53,0.35); margin-top: 4px;
-  }
+  .btn-enter { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--primary), #FF8C42); color: white; border: none; border-radius: 14px; font-family: 'Baloo 2', cursive; font-size: 17px; font-weight: 700; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 6px 20px rgba(255,107,53,0.35); margin-top: 4px; }
   .btn-enter:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(255,107,53,0.45); }
   .note { text-align: center; font-size: 12px; color: var(--muted); margin-top: 14px; }
 
-  header {
-    background: var(--dark); padding: 0 24px;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 64px; position: sticky; top: 0; z-index: 100;
-    box-shadow: 0 4px 20px rgba(26,26,46,0.3);
-  }
+  /* HEADER */
+  header { background: var(--dark); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(26,26,46,0.3); }
   .header-logo { font-family: 'Baloo 2', cursive; font-size: 22px; font-weight: 800; color: white; }
   .header-logo span { color: var(--secondary); }
   .header-right { display: flex; align-items: center; gap: 14px; }
   .user-chip { background: rgba(255,255,255,0.1); color: white; padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 600; }
-  .cart-btn {
-    background: var(--primary); color: white; border: none; padding: 8px 18px;
-    border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700;
-    cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background 0.2s, transform 0.15s;
-  }
+  .cart-btn { background: var(--primary); color: white; border: none; padding: 8px 18px; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background 0.2s, transform 0.15s; }
   .cart-btn:hover { background: #e55a27; transform: scale(1.04); }
-  .cart-count {
-    background: var(--secondary); color: var(--dark); border-radius: 100px;
-    width: 20px; height: 20px; font-size: 12px; font-weight: 800;
-    display: flex; align-items: center; justify-content: center;
-  }
+  .cart-count { background: var(--secondary); color: var(--dark); border-radius: 100px; width: 20px; height: 20px; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
 
-  .hero {
-    background: linear-gradient(120deg, var(--dark) 0%, #0F3460 100%);
-    padding: 48px 24px 40px; text-align: center; color: white; position: relative; overflow: hidden;
-  }
+  /* HERO */
+  .hero { background: linear-gradient(120deg, var(--dark) 0%, #0F3460 100%); padding: 48px 24px 40px; text-align: center; color: white; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 70% 50%, rgba(255,209,102,0.12) 0%, transparent 60%); }
   .hero h2 { font-family: 'Baloo 2', cursive; font-size: 32px; font-weight: 800; line-height: 1.2; position: relative; }
   .hero h2 em { color: var(--secondary); font-style: normal; }
   .hero p { margin-top: 10px; font-size: 15px; color: rgba(255,255,255,0.7); position: relative; }
 
+  /* PRODUCTS */
   .container { max-width: 960px; margin: 0 auto; padding: 32px 16px; }
   .section-title { font-family: 'Baloo 2', cursive; font-size: 22px; font-weight: 800; color: var(--dark); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
   .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-
-  .product-card {
-    background: white; border-radius: var(--radius); box-shadow: var(--shadow);
-    overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
-  }
+  .product-card { background: white; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
   .product-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(26,26,46,0.15); }
-
-  /* ===== PRODUCT IMAGE ===== */
-  .product-img {
-    width: 100%; height: 150px; overflow: hidden;
-    background: linear-gradient(135deg, #fff8f0, #fff3e0);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 60px;
-  }
-  .product-img img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.3s ease;
-  }
+  .product-img { width: 100%; height: 150px; overflow: hidden; background: linear-gradient(135deg, #fff8f0, #fff3e0); display: flex; align-items: center; justify-content: center; font-size: 60px; }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
   .product-card:hover .product-img img { transform: scale(1.07); }
-
   .product-info { padding: 14px 16px 16px; }
   .product-name { font-weight: 700; font-size: 14px; color: var(--dark); margin-bottom: 4px; line-height: 1.3; }
   .product-price { color: var(--primary); font-weight: 800; font-size: 16px; font-family: 'Baloo 2', cursive; }
   .product-unit { font-size: 12px; color: var(--muted); margin-left: 2px; font-weight: 400; }
-  .add-btn {
-    width: 100%; margin-top: 10px; padding: 9px; background: var(--dark); color: white;
-    border: none; border-radius: 10px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 13px;
-    cursor: pointer; transition: background 0.2s;
-  }
+  .add-btn { width: 100%; margin-top: 10px; padding: 9px; background: var(--dark); color: white; border: none; border-radius: 10px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer; transition: background 0.2s; }
   .add-btn:hover { background: var(--primary); }
 
-  #cart-panel {
-    position: fixed; right: 0; top: 0; bottom: 0; width: 360px; background: white;
-    box-shadow: -8px 0 40px rgba(0,0,0,0.15); z-index: 500; transform: translateX(100%);
-    transition: transform 0.35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column;
-  }
+  /* CART */
+  #cart-panel { position: fixed; right: 0; top: 0; bottom: 0; width: 360px; background: white; box-shadow: -8px 0 40px rgba(0,0,0,0.15); z-index: 500; transform: translateX(100%); transition: transform 0.35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; }
   #cart-panel.open { transform: translateX(0); }
   .cart-header { padding: 20px 24px; border-bottom: 2px dashed #eee; display: flex; align-items: center; justify-content: space-between; }
   .cart-header h3 { font-family: 'Baloo 2', cursive; font-size: 20px; font-weight: 800; color: var(--dark); }
@@ -142,14 +82,8 @@
   .cart-empty .big { font-size: 48px; display: block; margin-bottom: 10px; }
   .cart-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f5f5f5; animation: slideIn 0.3s ease; }
   @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-
-  /* thumbnail trong giỏ */
-  .ci-thumb {
-    width: 46px; height: 46px; border-radius: 10px; flex-shrink: 0; overflow: hidden;
-    background: #fff8f0; display: flex; align-items: center; justify-content: center; font-size: 26px;
-  }
+  .ci-thumb { width: 46px; height: 46px; border-radius: 10px; flex-shrink: 0; overflow: hidden; background: #fff8f0; display: flex; align-items: center; justify-content: center; font-size: 26px; }
   .ci-thumb img { width: 100%; height: 100%; object-fit: cover; }
-
   .ci-info { flex: 1; min-width: 0; }
   .ci-name { font-weight: 700; font-size: 13px; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .ci-price { font-size: 12px; color: var(--primary); font-weight: 700; }
@@ -163,28 +97,21 @@
   .cart-total strong { font-family: 'Baloo 2', cursive; font-size: 22px; color: var(--primary); }
   .note-input { width: 100%; padding: 10px 14px; border: 2px solid #eee; border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 13px; outline: none; resize: none; margin-bottom: 12px; transition: border-color 0.2s; }
   .note-input:focus { border-color: var(--accent); }
-  .order-btn {
-    width: 100%; padding: 15px; background: linear-gradient(135deg, var(--accent), #00B894);
-    color: white; border: none; border-radius: 14px; font-family: 'Baloo 2', cursive;
-    font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 20px rgba(6,214,160,0.35);
-    transition: transform 0.15s, box-shadow 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
+  .order-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--accent), #00B894); color: white; border: none; border-radius: 14px; font-family: 'Baloo 2', cursive; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 20px rgba(6,214,160,0.35); transition: transform 0.15s, box-shadow 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
   .order-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(6,214,160,0.45); }
   .order-btn:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; transform: none; }
 
-  /* POPUP NỀN */
+  /* POPUP CHUNG */
   .popup-overlay { display: none; position: fixed; inset: 0; z-index: 600; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
   .popup-overlay.show { display: flex; }
   .popup-box { background: white; border-radius: 24px; padding: 40px 36px; text-align: center; max-width: 360px; width: 90%; animation: popIn 0.4s cubic-bezier(.34,1.56,.64,1) both; }
   .popup-box .big { font-size: 64px; display: block; margin-bottom: 12px; }
   .popup-box h3 { font-family: 'Baloo 2', cursive; font-size: 24px; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
   .popup-box p { color: var(--muted); font-size: 14px; line-height: 1.6; }
-  /* NÚT THÀNH CÔNG */
   .btn-ok { margin-top: 20px; padding: 12px 32px; background: var(--accent); color: white; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; transition: background 0.2s; }
   .btn-ok:hover { background: #00B894; }
-  /* NÚT THẤT BẠI */
   .fail-actions { margin-top: 20px; display: flex; gap: 10px; justify-content: center; }
-  .btn-retry { padding: 12px 24px; background: var(--primary); color: white; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; transition: background 0.2s; }
+  .btn-retry { padding: 12px 24px; background: var(--primary); color: white; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; }
   .btn-retry:hover { background: #e55a27; }
   .btn-dismiss { padding: 12px 24px; background: #f0f0f0; color: var(--dark); border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; }
   .fail-hint { margin-top: 12px; font-size: 12px; color: #bbb; }
@@ -276,7 +203,7 @@
   <div class="popup-box">
     <span class="big">😔</span>
     <h3>Gửi đơn thất bại!</h3>
-    <p>Không thể kết nối đến server.<br>Có thể do <strong>mạng yếu</strong> hoặc <strong>token chưa đúng</strong>.</p>
+    <p>Không thể kết nối đến Telegram.<br>Có thể do <strong>mạng yếu</strong> hoặc <strong>token chưa đúng</strong>.</p>
     <div class="fail-actions">
       <button class="btn-retry" onclick="retryOrder()">🔄 Thử lại</button>
       <button class="btn-dismiss" onclick="closePopup('popup-fail')">Đóng</button>
@@ -286,80 +213,55 @@
 </div>
 
 <script>
-// =====================================================
-// ⚙️  CẤU HÌNH TELEGRAM
-// =====================================================
-const BOT_TOKEN = '8282934606:AAHtpLB4OpG6eF2yssvJtRgRjJjyme5aslk';   // VD: 7123456789:AAFxxxxxxxx
+// =============================================
+// ⚙️ ĐIỀN TOKEN VÀO ĐÂY
+// =============================================
+const BOT_TOKEN = '8282934606:AAHtpLB4OpG6eF2yssvJtRgRjJjyme5aslk';  // VD: 7123456789:AAFxxxxxxxx
 const CHAT_ID   = '8547038863';
+// =============================================
 
-// =====================================================
-// 🛍️  DANH SÁCH SẢN PHẨM
-// =====================================================
-// Với mỗi sản phẩm, bạn có thể đặt ảnh theo 3 cách:
-//   image: null               → dùng emoji (mặc định)
-//   image: 'https://...'      → ảnh từ internet
-//   image: 'images/ten.jpg'   → ảnh local (để file ảnh cạnh file HTML)
-// =====================================================
 const products = {
   'grid-1': [
-    {
-      id:1, emoji:'🖊️', name:'Bút bi Thiên Long TL-027', price:5000, unit:'cái',
-      image: 'https://nguyengiaphat.com.vn/wp-content/uploads/2021/09/but-bi-thien-long-tl-027.jpg'
-    },
-    {
-      id:2, emoji:'✏️', name:'Bút chì 2B Staedtler', price:8000, unit:'cái',
-      image: null
-    },
-    {
-      id:3, emoji:'🖍️', name:'Bút màu Faber-Castell 12 màu', price:45000, unit:'hộp',
-      image: null
-    },
-    {
-      id:4, emoji:'🖋️', name:'Bút mực Hồng Hà nét thanh', price:12000, unit:'cái',
-      image: null
-    },
+    { id:1,  emoji:'🖊️', name:'Bút bi Thiên Long TL-027',      price:5000,  unit:'cái',   image:'https://nguyengiaphat.com.vn/wp-content/uploads/2021/09/but-bi-thien-long-tl-027.jpg' },
+    { id:2,  emoji:'✏️', name:'Bút chì 2B Staedtler',           price:8000,  unit:'cái',   image:null },
+    { id:3,  emoji:'🖍️', name:'Bút màu Faber-Castell 12 màu',  price:45000, unit:'hộp',   image:null },
+    { id:4,  emoji:'🖋️', name:'Bút mực Hồng Hà nét thanh',     price:12000, unit:'cái',   image:null },
   ],
   'grid-2': [
-    { id:5,  emoji:'📓', name:'Vở 200 trang Ánh Dương kẻ ngang', price:18000, unit:'quyển', image: null },
-    { id:6,  emoji:'📔', name:'Vở 100 trang Oxford ô li',         price:12000, unit:'quyển', image: null },
-    { id:7,  emoji:'📒', name:'Sổ tay bìa cứng A5',               price:35000, unit:'quyển', image: null },
-    { id:8,  emoji:'📋', name:'Tập bìa nhựa A4 10 tờ',            price:22000, unit:'bộ',    image: null },
+    { id:5,  emoji:'📓', name:'Vở 200 trang Ánh Dương kẻ ngang', price:18000, unit:'quyển', image:null },
+    { id:6,  emoji:'📔', name:'Vở 100 trang Oxford ô li',         price:12000, unit:'quyển', image:null },
+    { id:7,  emoji:'📒', name:'Sổ tay bìa cứng A5',               price:35000, unit:'quyển', image:null },
+    { id:8,  emoji:'📋', name:'Tập bìa nhựa A4 10 tờ',            price:22000, unit:'bộ',    image:null },
   ],
   'grid-3': [
-    { id:9,  emoji:'📐', name:'Thước kẻ 30cm Điền Phú',   price:7000,  unit:'cái', image: null },
-    { id:10, emoji:'📏', name:'Thước đo độ + êke bộ 3',    price:15000, unit:'bộ',  image: null },
-    { id:11, emoji:'✂️', name:'Kéo học sinh cán nhựa',     price:20000, unit:'cái', image: null },
-    { id:12, emoji:'🗂️', name:'Bìa kẹp tài liệu A4',       price:25000, unit:'cái', image: null },
+    { id:9,  emoji:'📐', name:'Thước kẻ 30cm Điền Phú',   price:7000,  unit:'cái', image:null },
+    { id:10, emoji:'📏', name:'Thước đo độ + êke bộ 3',    price:15000, unit:'bộ',  image:null },
+    { id:11, emoji:'✂️', name:'Kéo học sinh cán nhựa',     price:20000, unit:'cái', image:null },
+    { id:12, emoji:'🗂️', name:'Bìa kẹp tài liệu A4',       price:25000, unit:'cái', image:null },
   ],
 };
 
-// =====================================================
-let customer = { name: '', phone: '' };
+let customer = { name:'', phone:'' };
 let cart = {};
+let lastMsg = '';
 
-// Render ảnh sản phẩm: nếu có image thì dùng <img>, không thì dùng emoji
-function imgHtml(p, cls = '') {
-  if (p.image) {
-    return `<img src="${p.image}" alt="${p.name}" class="${cls}"
-              onerror="this.outerHTML='<span>${p.emoji}</span>'" />`;
-  }
+// Render ảnh
+function imgHtml(p) {
+  if (p.image) return `<img src="${p.image}" alt="${p.name}" onerror="this.outerHTML='<span>${p.emoji}</span>'" />`;
   return `<span>${p.emoji}</span>`;
 }
 
-// Render lưới sản phẩm
+// Render sản phẩm
 Object.entries(products).forEach(([gridId, items]) => {
   document.getElementById(gridId).innerHTML = items.map(p => `
     <div class="product-card">
       <div class="product-img">${imgHtml(p)}</div>
       <div class="product-info">
         <div class="product-name">${p.name}</div>
-        <div class="product-price">${p.price.toLocaleString('vi-VN')}đ
-          <span class="product-unit">/${p.unit}</span>
-        </div>
+        <div class="product-price">${p.price.toLocaleString('vi-VN')}đ <span class="product-unit">/${p.unit}</span></div>
         <button class="add-btn" onclick="addToCart(${p.id})">+ Thêm vào giỏ</button>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 });
 
 // Đăng nhập
@@ -367,20 +269,10 @@ function doLogin() {
   const name  = document.getElementById('inp-name').value.trim();
   const phone = document.getElementById('inp-phone').value.trim();
   let ok = true;
-  if (!name) {
-    document.getElementById('inp-name').classList.add('error');
-    document.getElementById('err-name').classList.add('show'); ok = false;
-  } else {
-    document.getElementById('inp-name').classList.remove('error');
-    document.getElementById('err-name').classList.remove('show');
-  }
-  if (!/^(0[3-9])\d{8}$/.test(phone)) {
-    document.getElementById('inp-phone').classList.add('error');
-    document.getElementById('err-phone').classList.add('show'); ok = false;
-  } else {
-    document.getElementById('inp-phone').classList.remove('error');
-    document.getElementById('err-phone').classList.remove('show');
-  }
+  if (!name) { document.getElementById('inp-name').classList.add('error'); document.getElementById('err-name').classList.add('show'); ok=false; }
+  else { document.getElementById('inp-name').classList.remove('error'); document.getElementById('err-name').classList.remove('show'); }
+  if (!/^(0[3-9])\d{8}$/.test(phone)) { document.getElementById('inp-phone').classList.add('error'); document.getElementById('err-phone').classList.add('show'); ok=false; }
+  else { document.getElementById('inp-phone').classList.remove('error'); document.getElementById('err-phone').classList.remove('show'); }
   if (!ok) return;
   customer = { name, phone };
   document.getElementById('user-chip').textContent = '👤 ' + name;
@@ -391,62 +283,47 @@ document.getElementById('inp-phone').addEventListener('keydown', e => { if(e.key
 
 // Giỏ hàng
 function allProducts() { return Object.values(products).flat(); }
-
 function addToCart(id) {
-  cart[id] ? cart[id].qty++ : (cart[id] = { ...allProducts().find(x=>x.id===id), qty:1 });
+  cart[id] ? cart[id].qty++ : (cart[id] = {...allProducts().find(x=>x.id===id), qty:1});
   renderCart();
-  const btn = document.querySelector('.cart-btn');
-  btn.style.transform = 'scale(1.15)';
-  setTimeout(() => btn.style.transform = '', 150);
+  const b = document.querySelector('.cart-btn');
+  b.style.transform='scale(1.15)'; setTimeout(()=>b.style.transform='',150);
 }
-
 function changeQty(id, d) {
   if (!cart[id]) return;
   cart[id].qty += d;
   if (cart[id].qty <= 0) delete cart[id];
   renderCart();
 }
-
 function renderCart() {
   const items = Object.values(cart);
-  const total = items.reduce((s,i) => s + i.price*i.qty, 0);
-  document.getElementById('cart-count').textContent = items.reduce((s,i) => s+i.qty, 0);
-  document.getElementById('cart-total').textContent = total.toLocaleString('vi-VN') + 'đ';
-  document.getElementById('order-btn').disabled = items.length === 0;
-
+  const total = items.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('cart-count').textContent = items.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cart-total').textContent = total.toLocaleString('vi-VN')+'đ';
+  document.getElementById('order-btn').disabled = items.length===0;
   const el = document.getElementById('cart-items');
-  if (!items.length) {
-    el.innerHTML = `<div class="cart-empty"><span class="big">🛍️</span>Giỏ hàng trống<br>Thêm sản phẩm để đặt hàng!</div>`;
-    return;
-  }
-  el.innerHTML = items.map(i => `
+  if (!items.length) { el.innerHTML=`<div class="cart-empty"><span class="big">🛍️</span>Giỏ hàng trống<br>Thêm sản phẩm để đặt hàng!</div>`; return; }
+  el.innerHTML = items.map(i=>`
     <div class="cart-item">
       <div class="ci-thumb">${imgHtml(i)}</div>
-      <div class="ci-info">
-        <div class="ci-name">${i.name}</div>
-        <div class="ci-price">${(i.price*i.qty).toLocaleString('vi-VN')}đ</div>
-      </div>
+      <div class="ci-info"><div class="ci-name">${i.name}</div><div class="ci-price">${(i.price*i.qty).toLocaleString('vi-VN')}đ</div></div>
       <div class="ci-qty">
         <button class="qty-btn" onclick="changeQty(${i.id},-1)">−</button>
         <span class="qty-num">${i.qty}</span>
         <button class="qty-btn" onclick="changeQty(${i.id},+1)">+</button>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
-
 function toggleCart() { document.getElementById('cart-panel').classList.toggle('open'); }
 
-// Gửi đơn Telegram
-let lastOrderMsg = '';  // lưu lại để retry
-
-async function sendOrder() {
+// Gửi đơn hàng - dùng XMLHttpRequest thay fetch để tránh CORS preflight
+function sendOrder() {
   const items = Object.values(cart);
   if (!items.length) return;
   const note  = document.getElementById('order-note').value;
-  const total = items.reduce((s,i) => s+i.price*i.qty, 0);
-  const list  = items.map(i => `  • ${i.emoji} ${i.name} x${i.qty} = ${(i.price*i.qty).toLocaleString('vi-VN')}đ`).join('\n');
-  lastOrderMsg =
+  const total = items.reduce((s,i)=>s+i.price*i.qty,0);
+  const list  = items.map(i=>`  • ${i.emoji} ${i.name} x${i.qty} = ${(i.price*i.qty).toLocaleString('vi-VN')}đ`).join('\n');
+  lastMsg =
 `🛒 ĐƠN HÀNG MỚI – StudyShop
 ━━━━━━━━━━━━━━━━━━━
 👤 Khách hàng: ${customer.name}
@@ -459,64 +336,111 @@ ${list}
 📝 Ghi chú: ${note || 'Không có'}
 ━━━━━━━━━━━━━━━━━━━
 ⏰ ${new Date().toLocaleString('vi-VN')}`;
-
-  await doSendTelegram(lastOrderMsg, total);
+  doSend(lastMsg);
 }
 
-async function retryOrder() {
+function retryOrder() {
   closePopup('popup-fail');
-  if (lastOrderMsg) await doSendTelegram(lastOrderMsg, null);
+  if (lastMsg) doSend(lastMsg);
 }
 
-async function doSendTelegram(msg, total) {
+function doSend(msg) {
   const btn = document.getElementById('order-btn');
   btn.disabled = true; btn.textContent = '⏳ Đang gửi...';
 
+  // Dùng script tag injection - bypass CORS hoàn toàn, không cần proxy
+  const callbackName = 'tg_cb_' + Date.now();
   const params = new URLSearchParams({ chat_id: CHAT_ID, text: msg });
-  const telegramUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?${params}`;
+  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?${params}&callback=${callbackName}`;
 
-  // Danh sách proxy fallback, thử lần lượt
-  const proxies = [
-    `https://corsproxy.io/?${encodeURIComponent(telegramUrl)}`,
-    `https://api.allorigins.win/get?url=${encodeURIComponent(telegramUrl)}`,
-    `https://thingproxy.freeboard.io/fetch/${telegramUrl}`,
-  ];
+  let done = false;
 
-  let success = false;
-
-  for (const proxyUrl of proxies) {
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 8000); // 8s timeout mỗi proxy
-
-      const res = await fetch(proxyUrl, { signal: controller.signal });
-      clearTimeout(timeout);
-
-      const text = await res.text();
-      // Tìm "ok":true trong response dù format khác nhau tuỳ proxy
-      if (text.includes('"ok":true') || text.includes('"ok": true')) {
-        success = true;
-        break;
-      }
-    } catch(e) {
-      // Thử proxy tiếp theo
-      continue;
+  window[callbackName] = function(data) {
+    done = true;
+    cleanup();
+    btn.disabled = false; btn.innerHTML = '📲 Đặt hàng qua Telegram';
+    if (data && data.ok) {
+      document.getElementById('confirm-phone').textContent = customer.phone;
+      document.getElementById('popup-success').classList.add('show');
+      document.getElementById('cart-panel').classList.remove('open');
+      cart = {}; renderCart();
+      document.getElementById('order-note').value = '';
+      lastMsg = '';
+    } else {
+      document.getElementById('popup-fail').classList.add('show');
     }
+  };
+
+  // Timeout 10 giây
+  const timer = setTimeout(() => {
+    if (!done) {
+      done = true; cleanup();
+      btn.disabled = false; btn.innerHTML = '📲 Đặt hàng qua Telegram';
+
+      // Fallback: thử XMLHttpRequest với GET (không preflight)
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?${params}`, true);
+      xhr.timeout = 10000;
+      xhr.onload = function() {
+        try {
+          const res = JSON.parse(xhr.responseText);
+          if (res.ok) {
+            document.getElementById('confirm-phone').textContent = customer.phone;
+            document.getElementById('popup-success').classList.add('show');
+            document.getElementById('cart-panel').classList.remove('open');
+            cart = {}; renderCart();
+            document.getElementById('order-note').value = '';
+            lastMsg = '';
+          } else {
+            document.getElementById('popup-fail').classList.add('show');
+          }
+        } catch(e) {
+          document.getElementById('popup-fail').classList.add('show');
+        }
+      };
+      xhr.onerror = xhr.ontimeout = function() {
+        document.getElementById('popup-fail').classList.add('show');
+      };
+      xhr.send();
+    }
+  }, 10000);
+
+  const script = document.createElement('script');
+  script.src = url;
+  script.onerror = function() {
+    clearTimeout(timer);
+    if (!done) {
+      done = true; cleanup();
+      // Script lỗi → thử XMLHttpRequest fallback
+      btn.disabled = false; btn.innerHTML = '📲 Đặt hàng qua Telegram';
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?${params}`, true);
+      xhr.timeout = 10000;
+      xhr.onload = function() {
+        try {
+          const res = JSON.parse(xhr.responseText);
+          if (res.ok) {
+            document.getElementById('confirm-phone').textContent = customer.phone;
+            document.getElementById('popup-success').classList.add('show');
+            document.getElementById('cart-panel').classList.remove('open');
+            cart = {}; renderCart();
+            document.getElementById('order-note').value = '';
+            lastMsg = '';
+          } else { document.getElementById('popup-fail').classList.add('show'); }
+        } catch(e) { document.getElementById('popup-fail').classList.add('show'); }
+      };
+      xhr.onerror = xhr.ontimeout = () => document.getElementById('popup-fail').classList.add('show');
+      xhr.send();
+    }
+  };
+
+  function cleanup() {
+    clearTimeout(timer);
+    if (script.parentNode) script.parentNode.removeChild(script);
+    delete window[callbackName];
   }
 
-  btn.disabled = false;
-  btn.innerHTML = '📲 Đặt hàng qua Telegram';
-
-  if (success) {
-    document.getElementById('confirm-phone').textContent = customer.phone;
-    document.getElementById('popup-success').classList.add('show');
-    document.getElementById('cart-panel').classList.remove('open');
-    cart = {}; renderCart();
-    document.getElementById('order-note').value = '';
-    lastOrderMsg = '';
-  } else {
-    document.getElementById('popup-fail').classList.add('show');
-  }
+  document.head.appendChild(script);
 }
 
 function closePopup(id) { document.getElementById(id).classList.remove('show'); }

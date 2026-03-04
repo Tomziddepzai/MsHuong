@@ -172,13 +172,22 @@
   .order-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(6,214,160,0.45); }
   .order-btn:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; transform: none; }
 
-  #success-msg { display: none; position: fixed; inset: 0; z-index: 600; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
-  #success-msg.show { display: flex; }
-  .success-box { background: white; border-radius: 24px; padding: 40px 36px; text-align: center; max-width: 360px; width: 90%; animation: popIn 0.4s cubic-bezier(.34,1.56,.64,1) both; }
-  .success-box .big { font-size: 64px; display: block; margin-bottom: 12px; }
-  .success-box h3 { font-family: 'Baloo 2', cursive; font-size: 24px; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
-  .success-box p { color: var(--muted); font-size: 14px; line-height: 1.6; }
-  .success-close { margin-top: 20px; padding: 12px 32px; background: var(--dark); color: white; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; }
+  /* POPUP NỀN */
+  .popup-overlay { display: none; position: fixed; inset: 0; z-index: 600; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
+  .popup-overlay.show { display: flex; }
+  .popup-box { background: white; border-radius: 24px; padding: 40px 36px; text-align: center; max-width: 360px; width: 90%; animation: popIn 0.4s cubic-bezier(.34,1.56,.64,1) both; }
+  .popup-box .big { font-size: 64px; display: block; margin-bottom: 12px; }
+  .popup-box h3 { font-family: 'Baloo 2', cursive; font-size: 24px; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+  .popup-box p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+  /* NÚT THÀNH CÔNG */
+  .btn-ok { margin-top: 20px; padding: 12px 32px; background: var(--accent); color: white; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; transition: background 0.2s; }
+  .btn-ok:hover { background: #00B894; }
+  /* NÚT THẤT BẠI */
+  .fail-actions { margin-top: 20px; display: flex; gap: 10px; justify-content: center; }
+  .btn-retry { padding: 12px 24px; background: var(--primary); color: white; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; transition: background 0.2s; }
+  .btn-retry:hover { background: #e55a27; }
+  .btn-dismiss { padding: 12px 24px; background: #f0f0f0; color: var(--dark); border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; }
+  .fail-hint { margin-top: 12px; font-size: 12px; color: #bbb; }
 
   @media (max-width: 480px) {
     #cart-panel { width: 100%; }
@@ -252,12 +261,27 @@
   </div>
 </div>
 
-<div id="success-msg">
-  <div class="success-box">
+<!-- POPUP THÀNH CÔNG -->
+<div class="popup-overlay" id="popup-success">
+  <div class="popup-box">
     <span class="big">🎉</span>
     <h3>Đặt hàng thành công!</h3>
-    <p>Đơn hàng của bạn đã được gửi.<br>Chúng mình sẽ liên hệ số <strong id="confirm-phone"></strong> sớm nhất để xác nhận nhé!</p>
-    <button class="success-close" onclick="closeSuccess()">Tiếp tục mua sắm</button>
+    <p>Đơn hàng đã được gửi đến shop.<br>Chúng mình sẽ liên hệ số <strong id="confirm-phone"></strong> sớm nhất để xác nhận nhé!</p>
+    <button class="btn-ok" onclick="closePopup('popup-success')">🛍️ Tiếp tục mua sắm</button>
+  </div>
+</div>
+
+<!-- POPUP THẤT BẠI -->
+<div class="popup-overlay" id="popup-fail">
+  <div class="popup-box">
+    <span class="big">😔</span>
+    <h3>Gửi đơn thất bại!</h3>
+    <p>Không thể kết nối đến server.<br>Có thể do <strong>mạng yếu</strong> hoặc <strong>token chưa đúng</strong>.</p>
+    <div class="fail-actions">
+      <button class="btn-retry" onclick="retryOrder()">🔄 Thử lại</button>
+      <button class="btn-dismiss" onclick="closePopup('popup-fail')">Đóng</button>
+    </div>
+    <p class="fail-hint">Nếu vẫn lỗi, hãy kiểm tra BOT_TOKEN và kết nối mạng</p>
   </div>
 </div>
 
@@ -414,13 +438,15 @@ function renderCart() {
 function toggleCart() { document.getElementById('cart-panel').classList.toggle('open'); }
 
 // Gửi đơn Telegram
+let lastOrderMsg = '';  // lưu lại để retry
+
 async function sendOrder() {
   const items = Object.values(cart);
   if (!items.length) return;
   const note  = document.getElementById('order-note').value;
   const total = items.reduce((s,i) => s+i.price*i.qty, 0);
   const list  = items.map(i => `  • ${i.emoji} ${i.name} x${i.qty} = ${(i.price*i.qty).toLocaleString('vi-VN')}đ`).join('\n');
-  const msg =
+  lastOrderMsg =
 `🛒 ĐƠN HÀNG MỚI – StudyShop
 ━━━━━━━━━━━━━━━━━━━
 👤 Khách hàng: ${customer.name}
@@ -434,27 +460,47 @@ ${list}
 ━━━━━━━━━━━━━━━━━━━
 ⏰ ${new Date().toLocaleString('vi-VN')}`;
 
-  const btn = document.getElementById('order-btn');
-  btn.disabled = true; btn.textContent = '⏳ Đang gửi...';
-  try {
-    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
-    });
-    document.getElementById('confirm-phone').textContent = customer.phone;
-    document.getElementById('success-msg').classList.add('show');
-    cart = {}; renderCart();
-    document.getElementById('cart-panel').classList.remove('open');
-    document.getElementById('order-note').value = '';
-  } catch(e) {
-    alert('❌ Gửi đơn thất bại. Vui lòng thử lại!');
-  }
-  btn.disabled = false;
-  btn.innerHTML = '📲 Đặt hàng qua Telegram';
+  await doSendTelegram(lastOrderMsg, total);
 }
 
-function closeSuccess() { document.getElementById('success-msg').classList.remove('show'); }
+async function retryOrder() {
+  closePopup('popup-fail');
+  if (lastOrderMsg) await doSendTelegram(lastOrderMsg, null);
+}
+
+async function doSendTelegram(msg, total) {
+  const btn = document.getElementById('order-btn');
+  btn.disabled = true; btn.textContent = '⏳ Đang gửi...';
+  let success = false;
+  try {
+    // Dùng Image trick để bypass CORS (không cần server)
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`
+      + `?chat_id=${encodeURIComponent(CHAT_ID)}`
+      + `&text=${encodeURIComponent(msg)}`;
+
+    const res = await fetch(url, { method: 'GET' });
+    const json = await res.json();
+    success = json.ok === true;
+  } catch(e) {
+    success = false;
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '📲 Đặt hàng qua Telegram';
+
+  if (success) {
+    document.getElementById('confirm-phone').textContent = customer.phone;
+    document.getElementById('popup-success').classList.add('show');
+    document.getElementById('cart-panel').classList.remove('open');
+    cart = {}; renderCart();
+    document.getElementById('order-note').value = '';
+    lastOrderMsg = '';
+  } else {
+    document.getElementById('popup-fail').classList.add('show');
+  }
+}
+
+function closePopup(id) { document.getElementById(id).classList.remove('show'); }
 </script>
 </body>
 </html>

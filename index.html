@@ -348,99 +348,35 @@ function doSend(msg) {
   const btn = document.getElementById('order-btn');
   btn.disabled = true; btn.textContent = '⏳ Đang gửi...';
 
-  // Dùng script tag injection - bypass CORS hoàn toàn, không cần proxy
-  const callbackName = 'tg_cb_' + Date.now();
   const params = new URLSearchParams({ chat_id: CHAT_ID, text: msg });
-  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?${params}&callback=${callbackName}`;
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?${params}`, true);
+  xhr.timeout = 5000;
 
-  let done = false;
-
-  window[callbackName] = function(data) {
-    done = true;
-    cleanup();
-    btn.disabled = false; btn.innerHTML = '📲 Đặt hàng qua Telegram';
-    if (data && data.ok) {
-      document.getElementById('confirm-phone').textContent = customer.phone;
-      document.getElementById('popup-success').classList.add('show');
-      document.getElementById('cart-panel').classList.remove('open');
-      cart = {}; renderCart();
-      document.getElementById('order-note').value = '';
-      lastMsg = '';
-    } else {
-      document.getElementById('popup-fail').classList.add('show');
-    }
-  };
-
-  // Timeout 10 giây
-  const timer = setTimeout(() => {
-    if (!done) {
-      done = true; cleanup();
-      btn.disabled = false; btn.innerHTML = '📲 Đặt hàng qua Telegram';
-
-      // Fallback: thử XMLHttpRequest với GET (không preflight)
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?${params}`, true);
-      xhr.timeout = 10000;
-      xhr.onload = function() {
-        try {
-          const res = JSON.parse(xhr.responseText);
-          if (res.ok) {
-            document.getElementById('confirm-phone').textContent = customer.phone;
-            document.getElementById('popup-success').classList.add('show');
-            document.getElementById('cart-panel').classList.remove('open');
-            cart = {}; renderCart();
-            document.getElementById('order-note').value = '';
-            lastMsg = '';
-          } else {
-            document.getElementById('popup-fail').classList.add('show');
-          }
-        } catch(e) {
-          document.getElementById('popup-fail').classList.add('show');
-        }
-      };
-      xhr.onerror = xhr.ontimeout = function() {
-        document.getElementById('popup-fail').classList.add('show');
-      };
-      xhr.send();
-    }
-  }, 10000);
-
-  const script = document.createElement('script');
-  script.src = url;
-  script.onerror = function() {
-    clearTimeout(timer);
-    if (!done) {
-      done = true; cleanup();
-      // Script lỗi → thử XMLHttpRequest fallback
-      btn.disabled = false; btn.innerHTML = '📲 Đặt hàng qua Telegram';
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?${params}`, true);
-      xhr.timeout = 10000;
-      xhr.onload = function() {
-        try {
-          const res = JSON.parse(xhr.responseText);
-          if (res.ok) {
-            document.getElementById('confirm-phone').textContent = customer.phone;
-            document.getElementById('popup-success').classList.add('show');
-            document.getElementById('cart-panel').classList.remove('open');
-            cart = {}; renderCart();
-            document.getElementById('order-note').value = '';
-            lastMsg = '';
-          } else { document.getElementById('popup-fail').classList.add('show'); }
-        } catch(e) { document.getElementById('popup-fail').classList.add('show'); }
-      };
-      xhr.onerror = xhr.ontimeout = () => document.getElementById('popup-fail').classList.add('show');
-      xhr.send();
-    }
-  };
-
-  function cleanup() {
-    clearTimeout(timer);
-    if (script.parentNode) script.parentNode.removeChild(script);
-    delete window[callbackName];
+  function onSuccess() {
+    document.getElementById('confirm-phone').textContent = customer.phone;
+    document.getElementById('popup-success').classList.add('show');
+    document.getElementById('cart-panel').classList.remove('open');
+    cart = {}; renderCart();
+    document.getElementById('order-note').value = '';
+    lastMsg = '';
+  }
+  function onFail() {
+    document.getElementById('popup-fail').classList.add('show');
   }
 
-  document.head.appendChild(script);
+  xhr.onload = function() {
+    btn.disabled = false; btn.innerHTML = '📲 Đặt hàng qua Telegram';
+    try {
+      const res = JSON.parse(xhr.responseText);
+      res.ok ? onSuccess() : onFail();
+    } catch(e) { onFail(); }
+  };
+  xhr.onerror = xhr.ontimeout = function() {
+    btn.disabled = false; btn.innerHTML = '📲 Đặt hàng qua Telegram';
+    onFail();
+  };
+  xhr.send();
 }
 
 function closePopup(id) { document.getElementById(id).classList.remove('show'); }

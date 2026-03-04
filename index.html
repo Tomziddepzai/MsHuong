@@ -206,7 +206,7 @@
   <div class="header-logo">MSHUONG<span>SHOP</span> 🎒</div>
   <div class="header-right">
     <div class="user-chip" id="user-chip">👤 Khách</div>
-    <button class="admin-btn" onclick="openAdminLogin()">⚙️</button>
+    <button class="admin-btn" onclick="openAdminLogin()">⚙️ </button>
     <button class="cart-btn" onclick="toggleCart()">
       🛒 Giỏ hàng <div class="cart-count" id="cart-count">0</div>
     </button>
@@ -262,61 +262,7 @@
 <div id="admin-login">
   <div class="admin-login-box">
     <div style="font-size:40px;margin-bottom:8px">🔐</div>
-    <h3></h3>
-    <p>Quản lý sản phẩm</p>
-    <input type="password" class="pw-input" id="pw-input" placeholder="••••••" maxlength="20">
-    <div class="pw-error" id="pw-error">Sai mật khẩu! Thử lại nhé.</div>
-    <button class="btn-pw-ok" onclick="checkAdminPw()">Đăng nhập</button>
-    <button class="btn-pw-cancel" onclick="closeAdminLogin()">Huỷ</button>
-  </div>
-</div>
-
-<div id="admin-panel">
-  <div class="admin-box">
-    <div class="admin-head">
-      <h3>⚙️ Quản lý sản phẩm</h3>
-      <button class="close-admin" onclick="closeAdmin()">✕</button>
-    </div>
-    <div class="admin-body">
-      <div class="admin-section">
-        <div class="admin-section-title">➕ Thêm sản phẩm mới</div>
-        <div class="field-row full"><input class="a-input" id="a-name" placeholder="Tên sản phẩm" /></div>
-        <div class="field-row three">
-          <input class="a-input" id="a-price" placeholder="Giá (VD: 5000)" type="number" min="0" />
-          <input class="a-input" id="a-unit" placeholder="Đơn vị (cái...)" />
-          <input class="a-input" id="a-stock" placeholder="Số lượng" type="number" min="0" value="10" />
-        </div>
-        <div class="field-row">
-          <input class="a-input" id="a-emoji" placeholder="Emoji (VD: 🖊️)" />
-          <select class="a-select" id="a-cat">
-            <option value="Bút & Viết">✏️ Bút & Viết</option>
-            <option value="Dụng cụ học tập">📐 Dụng cụ học tập</option>
-            <option value="HOT TREND<div class="popup-overlay" id="popup-success">
-  <div class="popup-box">
-    <span class="big">🎉</span>
-    <h3>Đặt hàng thành công!</h3>
-    <p>Đơn hàng đã gửi đến cô Hường.<br>Cô sẽ liên hệ số <strong id="confirm-phone"></strong> sớm nhất nhé!</p>
-    <button class="btn-ok" onclick="closePopup('popup-success')">🛍️ Tiếp tục mua sắm</button>
-  </div>
-</div>
-
-<div class="popup-overlay" id="popup-fail">
-  <div class="popup-box">
-    <span class="big">😔</span>
-    <h3>Gửi đơn thất bại!</h3>
-    <p>Không thể kết nối.<br>Có thể do <strong>mạng yếu</strong>.</p>
-    <div class="fail-actions">
-      <button class="btn-retry" onclick="retryOrder()">🔄 Thử lại</button>
-      <button class="btn-dismiss" onclick="closePopup('popup-fail')">Đóng</button>
-    </div>
-    <p class="fail-hint">Kiểm tra kết nối mạng</p>
-  </div>
-</div>
-
-<div id="admin-login">
-  <div class="admin-login-box">
-    <div style="font-size:40px;margin-bottom:8px">🔐</div>
-    <h3></h3>
+    <h3> </h3>
     <p>Quản lý sản phẩm</p>
     <input type="password" class="pw-input" id="pw-input" placeholder="••••••" maxlength="20">
     <div class="pw-error" id="pw-error">Sai mật khẩu! Thử lại nhé.</div>

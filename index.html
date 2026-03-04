@@ -472,21 +472,36 @@ async function doSendTelegram(msg, total) {
   const btn = document.getElementById('order-btn');
   btn.disabled = true; btn.textContent = '⏳ Đang gửi...';
 
-  const telegramUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`
-    + `?chat_id=${encodeURIComponent(CHAT_ID)}`
-    + `&text=${encodeURIComponent(msg)}`;
+  const params = new URLSearchParams({ chat_id: CHAT_ID, text: msg });
+  const telegramUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?${params}`;
 
-  // Dùng allorigins proxy để bypass CORS
-  const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(telegramUrl)}`;
+  // Danh sách proxy fallback, thử lần lượt
+  const proxies = [
+    `https://corsproxy.io/?${encodeURIComponent(telegramUrl)}`,
+    `https://api.allorigins.win/get?url=${encodeURIComponent(telegramUrl)}`,
+    `https://thingproxy.freeboard.io/fetch/${telegramUrl}`,
+  ];
 
   let success = false;
-  try {
-    const res = await fetch(proxyUrl);
-    const data = await res.json();
-    const inner = JSON.parse(data.contents);
-    success = inner.ok === true;
-  } catch(e) {
-    success = false;
+
+  for (const proxyUrl of proxies) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000); // 8s timeout mỗi proxy
+
+      const res = await fetch(proxyUrl, { signal: controller.signal });
+      clearTimeout(timeout);
+
+      const text = await res.text();
+      // Tìm "ok":true trong response dù format khác nhau tuỳ proxy
+      if (text.includes('"ok":true') || text.includes('"ok": true')) {
+        success = true;
+        break;
+      }
+    } catch(e) {
+      // Thử proxy tiếp theo
+      continue;
+    }
   }
 
   btn.disabled = false;

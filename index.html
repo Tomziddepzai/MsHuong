@@ -162,6 +162,11 @@
   .btn-del:hover{background:#FF4757;color:white;}
   .close-admin{background:#f5f5f5;border:none;border-radius:10px;width:36px;height:36px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 
+
+  .upload-img-label{display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;border:2px dashed #eee;border-radius:10px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:13px;color:var(--muted);transition:border-color 0.2s,background 0.2s;background:#fafafa;}
+  .upload-img-label:hover{border-color:var(--primary);background:#fff5f2;color:var(--primary);}
+  .upload-img-label.has-img{border-color:var(--accent);background:#f0fdf9;color:#00a86b;}
+  .upload-img-thumb{width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0;}
   @media(max-width:480px){
     #cart-panel{width:100%;}
     .hero h2{font-size:24px;}
@@ -198,7 +203,7 @@
 </div>
 
 <header>
-  <div class="header-logo">MSHUONG<span>SHOP</span> 🎒</div>
+  <div class="header-logo">MSHUONG<span>Shop</span> 🎒</div>
   <div class="header-right">
     <div class="user-chip" id="user-chip">👤 Khách</div>
     <button class="admin-btn" onclick="openAdminLogin()">⚙️</button>
@@ -228,7 +233,7 @@
   <div class="cart-footer">
     <div class="cart-total"><span>Tổng cộng:</span><strong id="cart-total">0đ</strong></div>
     <textarea class="note-input" id="order-note" placeholder="Ghi chú (địa chỉ, yêu cầu...)" rows="2"></textarea>
-    <button class="order-btn" id="order-btn" onclick="sendOrder()" disabled>📲 Đặt Hàng</button>
+    <button class="order-btn" id="order-btn" onclick="sendOrder()" disabled>📲 Đặt Hàng </button>
   </div>
 </div>
 
@@ -285,11 +290,62 @@
           <input class="a-input" id="a-emoji" placeholder="Emoji (VD: 🖊️)" />
           <select class="a-select" id="a-cat">
             <option value="Bút & Viết">✏️ Bút & Viết</option>
-            <option value="Vở & Sổ">📚 Vở & Sổ</option>
             <option value="Dụng cụ học tập">📐 Dụng cụ học tập</option>
+            <option value="HOT TRENDss="popup-overlay" id="popup-fail">
+  <div class="popup-box">
+    <span class="big">😔</span>
+    <h3>Gửi đơn thất bại!</h3>
+    <p>Không thể kết nối.<br>Có thể do <strong>mạng yếu</strong>.</p>
+    <div class="fail-actions">
+      <button class="btn-retry" onclick="retryOrder()">🔄 Thử lại</button>
+      <button class="btn-dismiss" onclick="closePopup('popup-fail')">Đóng</button>
+    </div>
+    <p class="fail-hint">Kiểm tra kết nối mạng</p>
+  </div>
+</div>
+
+<div id="admin-login">
+  <div class="admin-login-box">
+    <div style="font-size:40px;margin-bottom:8px">🔐</div>
+    <h3>Khu vực Admin</h3>
+    <p>Nhập mật khẩu để quản lý sản phẩm</p>
+    <input type="password" class="pw-input" id="pw-input" placeholder="••••••" maxlength="20">
+    <div class="pw-error" id="pw-error">Sai mật khẩu! Thử lại nhé.</div>
+    <button class="btn-pw-ok" onclick="checkAdminPw()">Đăng nhập</button>
+    <button class="btn-pw-cancel" onclick="closeAdminLogin()">Huỷ</button>
+  </div>
+</div>
+
+<div id="admin-panel">
+  <div class="admin-box">
+    <div class="admin-head">
+      <h3>⚙️ Quản lý sản phẩm</h3>
+      <button class="close-admin" onclick="closeAdmin()">✕</button>
+    </div>
+    <div class="admin-body">
+      <div class="admin-section">
+        <div class="admin-section-title">➕ Thêm sản phẩm mới</div>
+        <div class="field-row full"><input class="a-input" id="a-name" placeholder="Tên sản phẩm" /></div>
+        <div class="field-row three">
+          <input class="a-input" id="a-price" placeholder="Giá (VD: 5000)" type="number" min="0" />
+          <input class="a-input" id="a-unit" placeholder="Đơn vị (cái...)" />
+          <input class="a-input" id="a-stock" placeholder="Số lượng" type="number" min="0" value="10" />
+        </div>
+        <div class="field-row">
+          <input class="a-input" id="a-emoji" placeholder="Emoji (VD: 🖊️)" />
+          <select class="a-select" id="a-cat">
+            <option value="Bút & Viết">✏️ Bút & Viết</option>
+            <option value="Dụng cụ học tập">📐 Dụng cụ học tập</option>
+            <option value="HOT TREND">🔥 HOT TREND</option>
           </select>
         </div>
-        <div class="field-row full"><input class="a-input" id="a-img" placeholder="Link ảnh (để trống nếu dùng emoji)" /></div>
+        <div class="field-row full">
+          <label class="upload-img-label" id="upload-label" onclick="document.getElementById('a-img-file').click()">
+            📷 Chọn ảnh từ thiết bị <small style="margin-left:auto;opacity:0.6">(để trống dùng emoji)</small>
+          </label>
+          <input type="file" id="a-img-file" accept="image/*" style="display:none" onchange="previewUpload(this)">
+          <input type="hidden" id="a-img">
+        </div>
         <button class="btn-add-product" onclick="addProduct()">+ Thêm sản phẩm</button>
       </div>
       <div class="admin-section">
@@ -369,13 +425,14 @@ function stockBadge(stock) {
 
 function renderShop() {
   const container = document.getElementById('shop-container');
-  const adminClass = isAdminMode ? ' admin-mode' : '';
   let html = '';
+  if (isAdminMode) document.getElementById('shop-container').classList.add('admin-mode');
+  else document.getElementById('shop-container').classList.remove('admin-mode');
   CATEGORIES.forEach(cat => {
     const items = products.filter(p => p.cat === cat.key);
     if (!items.length) return;
     html += `<div class="section-title">${cat.icon} ${cat.key}</div>`;
-    html += `<div class="products-grid${adminClass}">`;
+    html += `<div class="products-grid">`;
     items.forEach(p => {
       const oos = (p.stock <= 0);
       html += `
@@ -482,11 +539,15 @@ function addProduct() {
   const stock = parseInt(document.getElementById('a-stock').value) || 0;
   const emoji = document.getElementById('a-emoji').value.trim() || '📦';
   const cat   = document.getElementById('a-cat').value;
-  const image = document.getElementById('a-img').value.trim() || null;
+  const image = document.getElementById('a-img').value || null;
   if (!name || !price || !unit) { alert('Vui lòng điền đầy đủ: Tên, Giá, Đơn vị!'); return; }
   const newId = Date.now();
   db.ref('products/' + newId).set({ id:newId, name, price, unit, stock, emoji, cat, image });
   ['a-name','a-price','a-unit','a-stock','a-emoji','a-img'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('a-img-file').value = '';
+  const lbl = document.getElementById('upload-label');
+  lbl.innerHTML = '📷 Chọn ảnh từ thiết bị <small style="margin-left:auto;opacity:0.6">(để trống dùng emoji)</small>';
+  lbl.classList.remove('has-img');
   document.getElementById('a-stock').value = '10';
 }
 
@@ -589,6 +650,36 @@ function showSuccess() {
   document.getElementById('order-note').value = '';
   lastMsg = '';
 }
+
+function previewUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  // Giới hạn 2MB
+  if (file.size > 2 * 1024 * 1024) {
+    alert('Ảnh quá lớn! Vui lòng chọn ảnh dưới 2MB.');
+    input.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64 = e.target.result;
+    document.getElementById('a-img').value = base64;
+    const lbl = document.getElementById('upload-label');
+    lbl.innerHTML = `<img class="upload-img-thumb" src="${base64}"> <span>✅ ${file.name}</span> <small style="margin-left:auto;cursor:pointer;color:#FF4757" onclick="clearImg(event)">✕ Xoá</small>`;
+    lbl.classList.add('has-img');
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearImg(e) {
+  e.stopPropagation();
+  document.getElementById('a-img').value = '';
+  document.getElementById('a-img-file').value = '';
+  const lbl = document.getElementById('upload-label');
+  lbl.innerHTML = '📷 Chọn ảnh từ thiết bị <small style="margin-left:auto;opacity:0.6">(để trống dùng emoji)</small>';
+  lbl.classList.remove('has-img');
+}
+
 function closePopup(id) { document.getElementById(id).classList.remove('show'); }
 </script>
 </body>

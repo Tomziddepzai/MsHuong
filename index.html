@@ -117,7 +117,7 @@
   .btn-dismiss{padding:12px 24px;background:#f0f0f0;color:var(--dark);border:none;border-radius:12px;font-family:'Nunito',sans-serif;font-weight:700;font-size:15px;cursor:pointer;}
   .fail-hint{margin-top:12px;font-size:12px;color:#bbb;}
 
-  #admin-login{position:fixed;inset:0;z-index:810;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;}
+  #admin-login{position:fixed;inset:0;z-index:790;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;}
   #admin-login.show{display:flex;}
   .admin-login-box{background:white;border-radius:20px;padding:36px 32px;max-width:340px;width:90%;text-align:center;animation:popIn 0.4s cubic-bezier(.34,1.56,.64,1) both;}
   .admin-login-box h3{font-family:'Baloo 2',cursive;font-size:22px;font-weight:800;color:var(--dark);margin-bottom:6px;}
@@ -203,7 +203,7 @@
 </div>
 
 <header>
-  <div class="header-logo">MSHUONG<span>Shop</span> 🎒</div>
+  <div class="header-logo">MSHUONG<span>SHOP</span> 🎒</div>
   <div class="header-right">
     <div class="user-chip" id="user-chip">👤 Khách</div>
     <button class="admin-btn" onclick="openAdminLogin()">⚙️</button>
@@ -233,7 +233,7 @@
   <div class="cart-footer">
     <div class="cart-total"><span>Tổng cộng:</span><strong id="cart-total">0đ</strong></div>
     <textarea class="note-input" id="order-note" placeholder="Ghi chú (địa chỉ, yêu cầu...)" rows="2"></textarea>
-    <button class="order-btn" id="order-btn" onclick="sendOrder()" disabled>📲 Đặt Hàng </button>
+    <button class="order-btn" id="order-btn" onclick="sendOrder()" disabled>📲 Đặt Hàng</button>
   </div>
 </div>
 
@@ -262,8 +262,8 @@
 <div id="admin-login">
   <div class="admin-login-box">
     <div style="font-size:40px;margin-bottom:8px">🔐</div>
-    <h3>Khu vực Admin</h3>
-    <p>Nhập mật khẩu để quản lý sản phẩm</p>
+    <h3></h3>
+    <p>Quản lý sản phẩm</p>
     <input type="password" class="pw-input" id="pw-input" placeholder="••••••" maxlength="20">
     <div class="pw-error" id="pw-error">Sai mật khẩu! Thử lại nhé.</div>
     <button class="btn-pw-ok" onclick="checkAdminPw()">Đăng nhập</button>
@@ -291,7 +291,16 @@
           <select class="a-select" id="a-cat">
             <option value="Bút & Viết">✏️ Bút & Viết</option>
             <option value="Dụng cụ học tập">📐 Dụng cụ học tập</option>
-            <option value="HOT TRENDss="popup-overlay" id="popup-fail">
+            <option value="HOT TREND<div class="popup-overlay" id="popup-success">
+  <div class="popup-box">
+    <span class="big">🎉</span>
+    <h3>Đặt hàng thành công!</h3>
+    <p>Đơn hàng đã gửi đến cô Hường.<br>Cô sẽ liên hệ số <strong id="confirm-phone"></strong> sớm nhất nhé!</p>
+    <button class="btn-ok" onclick="closePopup('popup-success')">🛍️ Tiếp tục mua sắm</button>
+  </div>
+</div>
+
+<div class="popup-overlay" id="popup-fail">
   <div class="popup-box">
     <span class="big">😔</span>
     <h3>Gửi đơn thất bại!</h3>
@@ -307,8 +316,8 @@
 <div id="admin-login">
   <div class="admin-login-box">
     <div style="font-size:40px;margin-bottom:8px">🔐</div>
-    <h3>Khu vực Admin</h3>
-    <p>Nhập mật khẩu để quản lý sản phẩm</p>
+    <h3></h3>
+    <p>Quản lý sản phẩm</p>
     <input type="password" class="pw-input" id="pw-input" placeholder="••••••" maxlength="20">
     <div class="pw-error" id="pw-error">Sai mật khẩu! Thử lại nhé.</div>
     <button class="btn-pw-ok" onclick="checkAdminPw()">Đăng nhập</button>
@@ -389,8 +398,8 @@ const DEFAULT_PRODUCTS = [
 
 const CATEGORIES = [
   { key:'Bút & Viết',      icon:'✏️' },
-  { key:'Vở & Sổ',         icon:'📚' },
-  { key:'Dụng cụ học tập', icon:'📐' },
+  { key:'Dụng cụ học tập',         icon:'📐' },
+  { key:'HOT TREND', icon:'🔥' },
 ];
 
 let products = [];
@@ -474,15 +483,26 @@ document.getElementById('inp-phone').addEventListener('keydown', e => { if(e.key
 
 // ADMIN LOGIN
 function openAdminLogin() {
+  document.getElementById('admin-panel').classList.remove('show');
   document.getElementById('pw-input').value = '';
   document.getElementById('pw-error').classList.remove('show');
-  document.getElementById('admin-login').classList.add('show');
+  const loginEl = document.getElementById('admin-login');
+  loginEl.style.display = '';
+  loginEl.classList.add('show');
   setTimeout(() => document.getElementById('pw-input').focus(), 100);
 }
-function closeAdminLogin() { document.getElementById('admin-login').classList.remove('show'); }
+function closeAdminLogin() {
+  const el = document.getElementById('admin-login');
+  el.classList.remove('show');
+  el.style.display = 'none';
+  setTimeout(() => el.style.display = '', 50);
+}
 function checkAdminPw() {
   if (document.getElementById('pw-input').value === ADMIN_PASS) {
-    closeAdminLogin(); openAdmin();
+    const loginEl = document.getElementById('admin-login');
+    loginEl.classList.remove('show');
+    loginEl.style.display = 'none';
+    setTimeout(() => { loginEl.style.display = ''; openAdmin(); }, 100);
   } else {
     document.getElementById('pw-error').classList.add('show');
     const inp = document.getElementById('pw-input');

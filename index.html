@@ -349,33 +349,41 @@ function doSend(msg) {
   btn.disabled = true; btn.textContent = '⏳ Đang gửi...';
 
   const params = new URLSearchParams({ chat_id: CHAT_ID, text: msg });
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?${params}`, true);
-  xhr.timeout = 5000;
+  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?${params}`;
 
-  function onSuccess() {
-    document.getElementById('confirm-phone').textContent = customer.phone;
-    document.getElementById('popup-success').classList.add('show');
-    document.getElementById('cart-panel').classList.remove('open');
-    cart = {}; renderCart();
-    document.getElementById('order-note').value = '';
-    lastMsg = '';
-  }
-  function onFail() {
-    document.getElementById('popup-fail').classList.add('show');
-  }
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.timeout = 3000;
 
   xhr.onload = function() {
     btn.disabled = false; btn.innerHTML = '📲 Đặt hàng qua Telegram';
     try {
       const res = JSON.parse(xhr.responseText);
-      res.ok ? onSuccess() : onFail();
-    } catch(e) { onFail(); }
+      if (res.ok) {
+        document.getElementById('confirm-phone').textContent = customer.phone;
+        document.getElementById('popup-success').classList.add('show');
+        document.getElementById('cart-panel').classList.remove('open');
+        cart = {}; renderCart();
+        document.getElementById('order-note').value = '';
+        lastMsg = '';
+      } else {
+        document.getElementById('popup-fail').classList.add('show');
+      }
+    } catch(e) {
+      document.getElementById('popup-fail').classList.add('show');
+    }
   };
-  xhr.onerror = xhr.ontimeout = function() {
+
+  xhr.onerror = function() {
     btn.disabled = false; btn.innerHTML = '📲 Đặt hàng qua Telegram';
-    onFail();
+    document.getElementById('popup-fail').classList.add('show');
   };
+
+  xhr.ontimeout = function() {
+    btn.disabled = false; btn.innerHTML = '📲 Đặt hàng qua Telegram';
+    document.getElementById('popup-fail').classList.add('show');
+  };
+
   xhr.send();
 }
 

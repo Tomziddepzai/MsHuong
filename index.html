@@ -116,6 +116,34 @@
   .btn-dismiss { padding: 12px 24px; background: #f0f0f0; color: var(--dark); border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; }
   .fail-hint { margin-top: 12px; font-size: 12px; color: #bbb; }
 
+  
+  /* PAYMENT METHOD */
+  .payment-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .payment-methods { display: flex; gap: 8px; margin-bottom: 12px; }
+  .pay-opt { flex: 1; padding: 10px 6px; border: 2px solid #eee; border-radius: 12px; background: #fafafa; cursor: pointer; text-align: center; font-size: 12px; font-weight: 700; color: var(--muted); transition: all 0.2s; }
+  .pay-opt:hover { border-color: var(--primary); color: var(--primary); }
+  .pay-opt.active { border-color: var(--primary); background: #fff5f2; color: var(--primary); }
+  .pay-opt .pay-icon { font-size: 20px; display: block; margin-bottom: 3px; }
+
+  /* QR POPUP */
+  .qr-box { max-width: 400px; }
+  .qr-timer { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .qr-timer span { font-family: 'Baloo 2', cursive; font-size: 18px; font-weight: 800; color: var(--primary); }
+  .qr-timer.urgent span { color: #FF4757; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+  .qr-img-wrap { background: white; border: 3px solid #f0f0f0; border-radius: 16px; padding: 12px; display: inline-block; margin: 12px 0; }
+  .qr-img-wrap img { width: 200px; height: 200px; display: block; }
+  .qr-bank-info { background: #f8f9fa; border-radius: 12px; padding: 14px 16px; text-align: left; margin: 12px 0; font-size: 13px; line-height: 2; }
+  .qr-bank-info strong { color: var(--dark); }
+  .qr-bank-info .amount { font-family: 'Baloo 2', cursive; font-size: 20px; font-weight: 800; color: var(--primary); }
+  .qr-copy-row { display: flex; align-items: center; justify-content: space-between; }
+  .btn-copy { background: var(--secondary); border: none; border-radius: 8px; padding: 4px 10px; font-size: 11px; font-weight: 700; cursor: pointer; color: var(--dark); }
+  .btn-copy:hover { background: #ffc800; }
+  .qr-note { font-size: 11px; color: #FF6B35; font-weight: 700; margin-top: 8px; }
+  .qr-actions { display: flex; gap: 8px; margin-top: 16px; justify-content: center; }
+  .btn-paid { padding: 12px 24px; background: var(--accent); color: white; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; }
+  .btn-cancel-qr { padding: 12px 20px; background: #f0f0f0; color: var(--dark); border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; }
+  .qr-expired { color: #FF4757; font-weight: 700; font-size: 14px; margin-top: 8px; }
   @media (max-width: 480px) {
     #cart-panel { width: 100%; }
     .hero h2 { font-size: 24px; }
@@ -183,6 +211,15 @@
   </div>
   <div class="cart-footer">
     <div class="cart-total"><span>Tổng cộng:</span><strong id="cart-total">0đ</strong></div>
+    <div class="payment-label">💳 Hình thức thanh toán</div>
+    <div class="payment-methods">
+      <div class="pay-opt active" id="pay-cod" onclick="selectPay('cod')">
+        <span class="pay-icon">🚚</span>COD
+      </div>
+      <div class="pay-opt" id="pay-bank" onclick="selectPay('bank')">
+        <span class="pay-icon">🏦</span>Ngân hàng
+      </div>
+    </div>
     <textarea class="note-input" id="order-note" placeholder="Ghi chú đơn hàng (địa chỉ, yêu cầu...)" rows="2"></textarea>
     <button class="order-btn" id="order-btn" onclick="sendOrder()" disabled>📲 Đặt hàng qua Telegram</button>
   </div>
@@ -316,13 +353,25 @@ function renderCart() {
 }
 function toggleCart() { document.getElementById('cart-panel').classList.toggle('open'); }
 
-// Gửi đơn hàng - dùng XMLHttpRequest thay fetch để tránh CORS preflight
+
+// ===== THANH TOÁN =====
+let payMethod = 'cod';
+let qrTimer = null;
+
+function selectPay(method) {
+  payMethod = method;
+  document.getElementById('pay-cod').classList.toggle('active', method === 'cod');
+  document.getElementById('pay-bank').classList.toggle('active', method === 'bank');
+}
+
 function sendOrder() {
   const items = Object.values(cart);
   if (!items.length) return;
   const note  = document.getElementById('order-note').value;
-  const total = items.reduce((s,i)=>s+i.price*i.qty,0);
-  const list  = items.map(i=>`  • ${i.emoji} ${i.name} x${i.qty} = ${(i.price*i.qty).toLocaleString('vi-VN')}đ`).join('\n');
+  const total = items.reduce((s,i) => s+i.price*i.qty, 0);
+  const list  = items.map(i => `  • ${i.emoji} ${i.name} x${i.qty} = ${(i.price*i.qty).toLocaleString('vi-VN')}đ`).join('
+');
+
   lastMsg =
 `🛒 ĐƠN HÀNG MỚI – StudyShop
 ━━━━━━━━━━━━━━━━━━━
@@ -333,15 +382,83 @@ function sendOrder() {
 ${list}
 ━━━━━━━━━━━━━━━━━━━
 💰 Tổng cộng: ${total.toLocaleString('vi-VN')}đ
+💳 Thanh toán: ${payMethod === 'bank' ? 'Chuyển khoản ngân hàng' : 'COD (nhận hàng trả tiền)'}
 📝 Ghi chú: ${note || 'Không có'}
 ━━━━━━━━━━━━━━━━━━━
 ⏰ ${new Date().toLocaleString('vi-VN')}`;
-  doSend(lastMsg);
+
+  if (payMethod === 'bank') {
+    // Hiện QR trước, sau đó gửi Telegram
+    showQR(total, note);
+    doSend(lastMsg);
+  } else {
+    doSend(lastMsg);
+  }
 }
 
-function retryOrder() {
-  closePopup('popup-fail');
-  if (lastMsg) doSend(lastMsg);
+function showQR(total, note) {
+  const content = customer.phone + ' ' + customer.name.split(' ').pop().toUpperCase();
+  document.getElementById('qr-amount').textContent = total.toLocaleString('vi-VN') + 'đ';
+  document.getElementById('qr-content').textContent = content;
+  document.getElementById('qr-expired-msg').style.display = 'none';
+  document.getElementById('qr-timer').style.display = 'block';
+
+  // Sinh QR dùng VietQR API - tự động nhập số tiền + nội dung
+  const bankId  = 'ACB';
+  const acctNo  = '20867371';
+  const qrUrl   = `https://img.vietqr.io/image/${bankId}-${acctNo}-qr_only.png`
+    + `?amount=${total}&addInfo=${encodeURIComponent(content)}&accountName=BUI%20VIET%20HIEP`;
+  document.getElementById('qr-img').src = qrUrl;
+
+  document.getElementById('popup-qr').classList.add('show');
+  document.getElementById('cart-panel').classList.remove('open');
+
+  // Đếm ngược 10 phút
+  let secs = 600;
+  const countEl = document.getElementById('qr-countdown');
+  const timerEl = document.getElementById('qr-timer');
+  clearInterval(qrTimer);
+  qrTimer = setInterval(() => {
+    secs--;
+    const m = String(Math.floor(secs/60)).padStart(2,'0');
+    const s = String(secs%60).padStart(2,'0');
+    countEl.textContent = m + ':' + s;
+    if (secs <= 60) timerEl.classList.add('urgent');
+    if (secs <= 0) {
+      clearInterval(qrTimer);
+      countEl.textContent = '00:00';
+      document.getElementById('qr-expired-msg').style.display = 'block';
+      timerEl.style.display = 'none';
+      document.getElementById('qr-img').style.opacity = '0.3';
+    }
+  }, 1000);
+}
+
+function confirmPaid() {
+  clearInterval(qrTimer);
+  closePopup('popup-qr');
+  document.getElementById('confirm-phone').textContent = customer.phone;
+  document.getElementById('popup-success').classList.add('show');
+  cart = {}; renderCart();
+  document.getElementById('order-note').value = '';
+  lastMsg = '';
+}
+
+function cancelQR() {
+  clearInterval(qrTimer);
+  closePopup('popup-qr');
+  document.getElementById('cart-panel').classList.add('open');
+}
+
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const btns = document.querySelectorAll('.btn-copy');
+    btns.forEach(b => { if(b.onclick && b.onclick.toString().includes(text)) { b.textContent='✅'; setTimeout(()=>b.textContent='Copy',1500); }});
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+  });
 }
 
 function doSend(msg) {
@@ -389,5 +506,40 @@ function doSend(msg) {
 
 function closePopup(id) { document.getElementById(id).classList.remove('show'); }
 </script>
+
+<!-- POPUP QR THANH TOÁN -->
+<div class="popup-overlay" id="popup-qr">
+  <div class="popup-box qr-box">
+    <span class="big">🏦</span>
+    <h3>Thanh toán QR</h3>
+    <div class="qr-timer" id="qr-timer">Hết hạn sau: <span id="qr-countdown">10:00</span></div>
+    <div class="qr-img-wrap">
+      <img id="qr-img" src="" alt="QR Code" />
+    </div>
+    <div class="qr-bank-info">
+      <div><strong>Ngân hàng:</strong> VIETCOMBANK</div>
+      <div><strong>Số tài khoản:</strong>
+        <div class="qr-copy-row">
+          <span id="qr-stk">9384383107</span>
+          <button class="btn-copy" onclick="copyText('9384383107')">Copy</button>
+        </div>
+      </div>
+      <div><strong>Chủ TK:</strong> PHÍ THỊ HƯỜNG</div>
+      <div><strong>Số tiền:</strong> <span class="amount" id="qr-amount"></span></div>
+      <div><strong>Nội dung:</strong>
+        <div class="qr-copy-row">
+          <span id="qr-content"></span>
+          <button class="btn-copy" onclick="copyText(document.getElementById('qr-content').textContent)">Copy</button>
+        </div>
+      </div>
+    </div>
+    <div class="qr-note">⚠️ Vui lòng ghi đúng nội dung chuyển tiền!</div>
+    <div id="qr-expired-msg" style="display:none" class="qr-expired">⏰ QR đã hết hạn! Vui lòng đặt lại đơn.</div>
+    <div class="qr-actions">
+      <button class="btn-paid" onclick="confirmPaid()">✅ Tôi đã chuyển khoản</button>
+      <button class="btn-cancel-qr" onclick="cancelQR()">Huỷ</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

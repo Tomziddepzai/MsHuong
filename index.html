@@ -304,7 +304,7 @@ const products = {
   'grid-1': [
     {
       id:1, emoji:'🖊️', name:'Bút bi Thiên Long TL-027', price:5000, unit:'cái',
-      image: 'https://nguyengiaphat.com.vn/wp-content/uploads/2021/09/but-bi-thien-long-tl-027.jpg'   // 👉 thay null bằng đường dẫn ảnh của bạn
+      image: 'https://nguyengiaphat.com.vn/wp-content/uploads/2021/09/but-bi-thien-long-tl-027.jpg'
     },
     {
       id:2, emoji:'✏️', name:'Bút chì 2B Staedtler', price:8000, unit:'cái',
@@ -471,18 +471,26 @@ async function retryOrder() {
 async function doSendTelegram(msg, total) {
   const btn = document.getElementById('order-btn');
   btn.disabled = true; btn.textContent = '⏳ Đang gửi...';
+
+  // Telegram API hỗ trợ GET, dùng no-cors để bypass CORS trên browser
+  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`
+    + `?chat_id=${encodeURIComponent(CHAT_ID)}`
+    + `&text=${encodeURIComponent(msg)}`;
+
   let success = false;
   try {
-    // Dùng Image trick để bypass CORS (không cần server)
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`
-      + `?chat_id=${encodeURIComponent(CHAT_ID)}`
-      + `&text=${encodeURIComponent(msg)}`;
-
-    const res = await fetch(url, { method: 'GET' });
+    // Thử cors trước để đọc response
+    const res = await fetch(url, { method: 'GET', mode: 'cors' });
     const json = await res.json();
     success = json.ok === true;
   } catch(e) {
-    success = false;
+    try {
+      // Fallback no-cors: gửi được nhưng không đọc response → coi là thành công
+      await fetch(url, { method: 'GET', mode: 'no-cors' });
+      success = true;
+    } catch(e2) {
+      success = false;
+    }
   }
 
   btn.disabled = false;

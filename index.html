@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Study Shop</title>
+<title>Demo Shop</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -169,6 +169,8 @@
     .popup-box{padding:28px 20px;}
   }
 </style>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
@@ -318,6 +320,24 @@
 // =============================================
 // ⚙️ CẤU HÌNH
 // =============================================
+const BOT_TOKEN  = 'ĐIỀN_TOKEN_CỦA_BẠN';
+const CHAT_ID    = '8547038863';
+const ADMIN_PASS = 'admin123';
+
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyDMkQeQJ71_vLzxLlkAAUz6Cfil-6rDmF4",
+  authDomain: "mshuong-bb209.firebaseapp.com",
+  databaseURL: "https://mshuong-bb209-default-rtdb.firebaseio.com",
+  projectId: "mshuong-bb209",
+  storageBucket: "mshuong-bb209.firebasestorage.app",
+  messagingSenderId: "86617226447",
+  appId: "1:86617226447:web:fc73ed98948d4a63c00bba"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+// =============================================
+// =============================================
 const BOT_TOKEN    = '8282934606:AAFlsscY2DKZN12I95PX_VZU4UGVVp_MeXI';
 const CHAT_ID      = '8547038863';
 const ADMIN_PASS   = 'admin123';  // 👈 Đổi mật khẩu admin tại đây
@@ -350,17 +370,31 @@ let cart = {};
 let lastMsg = '';
 let isAdminMode = false;
 
-// Load sản phẩm từ localStorage hoặc dùng mặc định
-function loadProducts() {
-  try {
-    const saved = localStorage.getItem('studyshop_products');
-    return saved ? JSON.parse(saved) : [...DEFAULT_PRODUCTS];
-  } catch(e) { return [...DEFAULT_PRODUCTS]; }
+let products = [...DEFAULT_PRODUCTS];
+
+// Load sản phẩm từ Firebase, realtime sync
+function initFirebase() {
+  db.ref('products').on('value', snapshot => {
+    const data = snapshot.val();
+    if (data) {
+      products = Object.values(data);
+    } else {
+      // Lần đầu: đẩy sản phẩm mặc định lên Firebase
+      DEFAULT_PRODUCTS.forEach(p => {
+        db.ref('products/' + p.id).set(p);
+      });
+      products = [...DEFAULT_PRODUCTS];
+    }
+    renderShop();
+    if (document.getElementById('admin-panel').classList.contains('show')) {
+      renderAdminList();
+    }
+  });
 }
+
 function saveProducts(prods) {
-  localStorage.setItem('studyshop_products', JSON.stringify(prods));
+  // Không dùng nữa — Firebase tự sync
 }
-let products = loadProducts();
 
 // ---- RENDER SHOP ----
 function imgHtml(p, cls='') {
@@ -490,10 +524,9 @@ function addProduct() {
   }
 
   const newId = Date.now();
-  products.push({ id:newId, name, price, unit, emoji, cat, image });
-  saveProducts(products);
-  renderShop();
-  renderAdminList();
+  const newProduct = { id:newId, name, price, unit, emoji, cat, image };
+  db.ref('products/' + newId).set(newProduct);
+  // renderShop và renderAdminList sẽ tự chạy qua Firebase listener
 
   // Reset form
   ['a-name','a-price','a-unit','a-emoji','a-img'].forEach(id => document.getElementById(id).value = '');
@@ -502,12 +535,10 @@ function addProduct() {
 
 function deleteProduct(id) {
   if (!confirm('Xoá sản phẩm này?')) return;
-  products = products.filter(p => p.id !== id);
-  saveProducts(products);
+  db.ref('products/' + id).remove();
   // Xoá khỏi giỏ nếu có
   if (cart[id]) { delete cart[id]; renderCart(); }
-  renderShop();
-  renderAdminList();
+  // renderShop và renderAdminList sẽ tự chạy qua Firebase listener
 }
 
 // ---- CART ----
@@ -613,7 +644,7 @@ function showSuccess() {
 function closePopup(id) { document.getElementById(id).classList.remove('show'); }
 
 // Init
-renderShop();
+initFirebase();
 </script>
 </body>
 </html>

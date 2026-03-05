@@ -167,6 +167,21 @@
   .upload-img-label:hover{border-color:var(--primary);background:#fff5f2;color:var(--primary);}
   .upload-img-label.has-img{border-color:var(--accent);background:#f0fdf9;color:#00a86b;}
   .upload-img-thumb{width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0;}
+
+  /* SEARCH BAR */
+  .search-wrap{max-width:960px;margin:0 auto;padding:20px 16px 0;}
+  .search-box{display:flex;align-items:center;gap:12px;background:white;border-radius:16px;padding:12px 20px;box-shadow:var(--shadow);border:2px solid transparent;transition:border-color 0.2s,box-shadow 0.2s;}
+  .search-box:focus-within{border-color:var(--primary);box-shadow:0 8px 32px rgba(255,107,53,0.15);}
+  .search-box .s-icon{font-size:20px;flex-shrink:0;color:var(--muted);}
+  .search-box input{flex:1;border:none;outline:none;font-family:'Nunito',sans-serif;font-size:15px;color:var(--text);background:transparent;}
+  .search-box input::placeholder{color:#bbb;}
+  .search-clear{background:none;border:none;cursor:pointer;font-size:18px;color:#bbb;padding:0 4px;display:none;transition:color 0.15s;}
+  .search-clear:hover{color:var(--primary);}
+  .search-clear.show{display:block;}
+  .search-results-info{font-size:13px;color:var(--muted);margin:12px 0 0;font-weight:600;}
+  .search-results-info span{color:var(--primary);}
+  .no-results{text-align:center;padding:60px 0;color:var(--muted);}
+  .no-results .big{font-size:56px;display:block;margin-bottom:12px;}
   @media(max-width:480px){
     #cart-panel{width:100%;}
     .hero h2{font-size:24px;}
@@ -206,7 +221,7 @@
   <div class="header-logo">MSHUONG<span>SHOP</span> 🎒</div>
   <div class="header-right">
     <div class="user-chip" id="user-chip">👤 Khách</div>
-    <button class="admin-btn" onclick="openAdminLogin()">⚙️ </button>
+    <button class="admin-btn" onclick="openAdminLogin()">⚙️</button>
     <button class="cart-btn" onclick="toggleCart()">
       🛒 Giỏ hàng <div class="cart-count" id="cart-count">0</div>
     </button>
@@ -216,6 +231,15 @@
 <div class="hero">
   <h2>Sắm đồ học tập<br><em>thật dễ dàng</em> 🌟</h2>
   <p>Chọn hàng → Đặt đơn → Chúng mình giao tới tận tay!</p>
+</div>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <span class="s-icon">🔍</span>
+    <input type="text" id="search-input" placeholder="Tìm kiếm sản phẩm..." oninput="doSearch(this.value)" autocomplete="off">
+    <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+  </div>
+  <div class="search-results-info" id="search-info" style="display:none"></div>
 </div>
 
 <div class="container" id="shop-container">
@@ -232,7 +256,7 @@
   </div>
   <div class="cart-footer">
     <div class="cart-total"><span>Tổng cộng:</span><strong id="cart-total">0đ</strong></div>
-    <textarea class="note-input" id="order-note" placeholder="Ghi chú (địa chỉ, yêu cầu...)" rows="2"></textarea>
+    <textarea class="note-input" id="order-note" placeholder="Ghi chú (địa chỉ, màu sắc...)" rows="2"></textarea>
     <button class="order-btn" id="order-btn" onclick="sendOrder()" disabled>📲 Đặt Hàng</button>
   </div>
 </div>
@@ -262,7 +286,7 @@
 <div id="admin-login">
   <div class="admin-login-box">
     <div style="font-size:40px;margin-bottom:8px">🔐</div>
-    <h3> </h3>
+    <h3>Khu vực Admin</h3>
     <p>Quản lý sản phẩm</p>
     <input type="password" class="pw-input" id="pw-input" placeholder="••••••" maxlength="20">
     <div class="pw-error" id="pw-error">Sai mật khẩu! Thử lại nhé.</div>
@@ -349,6 +373,20 @@ const CATEGORIES = [
 ];
 
 let products = [];
+let searchQuery = '';
+
+function doSearch(val) {
+  searchQuery = val.trim().toLowerCase();
+  document.getElementById('search-clear').classList.toggle('show', val.length > 0);
+  renderShop();
+}
+
+function clearSearch() {
+  searchQuery = '';
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-clear').classList.remove('show');
+  renderShop();
+}
 let customer = { name:'', phone:'' };
 let cart = {};
 let lastMsg = '';
@@ -383,8 +421,20 @@ function renderShop() {
   let html = '';
   if (isAdminMode) document.getElementById('shop-container').classList.add('admin-mode');
   else document.getElementById('shop-container').classList.remove('admin-mode');
+  // Filter theo search
+  const infoEl = document.getElementById('search-info');
+  let totalMatch = 0;
+
   CATEGORIES.forEach(cat => {
-    const items = products.filter(p => p.cat === cat.key);
+    let items = products.filter(p => p.cat === cat.key);
+    if (searchQuery) {
+      items = items.filter(p =>
+        p.name.toLowerCase().includes(searchQuery) ||
+        p.cat.toLowerCase().includes(searchQuery) ||
+        p.emoji.includes(searchQuery)
+      );
+    }
+    totalMatch += items.length;
     if (!items.length) return;
     html += `<div class="section-title">${cat.icon} ${cat.key}</div>`;
     html += `<div class="products-grid">`;
@@ -406,8 +456,22 @@ function renderShop() {
     });
     html += `</div>`;
   });
-  if (!products.length) html = `<div style="text-align:center;padding:60px 0;color:var(--muted);font-size:15px">📭 Chưa có sản phẩm nào.</div>`;
+  if (!products.length) {
+    html = `<div style="text-align:center;padding:60px 0;color:var(--muted);font-size:15px">📭 Chưa có sản phẩm nào.</div>`;
+  } else if (searchQuery && totalMatch === 0) {
+    html = `<div class="no-results"><span class="big">🔍</span>Không tìm thấy "<strong>${searchQuery}</strong>"<br><span style="font-size:13px;margin-top:8px;display:block">Thử tìm từ khoá khác nhé!</span></div>`;
+  }
   container.innerHTML = html;
+
+  // Search info
+  if (infoEl) {
+    if (searchQuery && totalMatch > 0) {
+      infoEl.style.display = 'block';
+      infoEl.innerHTML = `Tìm thấy <span>${totalMatch} sản phẩm</span> cho "<strong>${searchQuery}</strong>"`;
+    } else {
+      infoEl.style.display = 'none';
+    }
+  }
 }
 
 // LOGIN
@@ -573,7 +637,7 @@ function sendOrder() {
   const total = items.reduce((s,i) => s + i.price * i.qty, 0);
   const list  = items.map(i => `  • ${i.emoji} ${i.name} x${i.qty} = ${(i.price*i.qty).toLocaleString('vi-VN')}đ`).join('\n');
   lastMsg =
-`🛒 ĐƠN HÀNG MỚI – StudyShop
+`🛒 ĐƠN HÀNG MỚI – MsHuongShop
 ━━━━━━━━━━━━━━━━━━━
 👤 Khách hàng: ${customer.name}
 📞 Số điện thoại: ${customer.phone}

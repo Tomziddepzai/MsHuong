@@ -1340,17 +1340,34 @@ function triggerImgSlot(idx) {
   document.getElementById('a-img-file').click();
 }
 
-function handleSlotUpload(input) {
+async function handleSlotUpload(input) {
   const file = input.files[0];
   if (!file) return;
-  if (file.size > 2*1024*1024) { alert('Ảnh quá lớn! Vui lòng chọn ảnh dưới 2MB.'); input.value=''; return; }
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    adminImgSlots[currentSlotIndex] = e.target.result;
+  if (file.size > 32*1024*1024) { alert('Ảnh quá lớn! Vui lòng chọn ảnh dưới 32MB.'); input.value=''; return; }
+
+  const slotIdx = currentSlotIndex;
+  const slot = document.getElementById('img-slot-' + slotIdx);
+  if (slot) { slot.innerHTML = '<span style="font-size:13px;color:#999">⏳ Đang tải...</span>'; }
+
+  try {
+    const IMGBB_KEY = '596ccf3842830fc7dee77cbb070dee9d';
+    const formData = new FormData();
+    formData.append('image', file);
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error('ImgBB lỗi: ' + JSON.stringify(data));
+    adminImgSlots[slotIdx] = data.data.url;
     document.getElementById('a-img').value = adminImgSlots[0] || '';
     renderImgSlots();
-  };
-  reader.readAsDataURL(file);
+  } catch (err) {
+    console.error(err);
+    alert('Upload ảnh thất bại! Kiểm tra kết nối mạng.\n' + err.message);
+    renderImgSlots();
+  }
+  input.value = '';
 }
 
 function removeImgSlot(e, idx) {

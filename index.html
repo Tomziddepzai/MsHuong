@@ -618,6 +618,13 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
         </div>
         <div class="admin-section">
           <div class="admin-section-title">📦 Danh sách sản phẩm (<span id="product-count">0</span>)</div>
+          <div id="migrate-wrap" style="margin-bottom:10px;display:none">
+            <button onclick="migrateAllImages()" id="btn-migrate"
+              style="width:100%;padding:10px;background:#fff8e6;border:2px solid #FFD166;border-radius:10px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:#b8860b;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;touch-action:manipulation">
+              ⚡ Chuyển ảnh cũ sang ImgBB (<span id="migrate-count">0</span> ảnh)
+            </button>
+            <div id="migrate-log" style="margin-top:8px;font-size:11px;color:var(--muted);line-height:1.8;display:none"></div>
+          </div>
           <div class="product-list-admin" id="product-list-admin"></div>
         </div>
       </div>
@@ -1655,7 +1662,90 @@ openAdmin = function(){
   const aptCP = document.getElementById('apt-count-products');
   if(aptCP) aptCP.textContent = products.length;
   startOrderListener();
+  checkMigrateNeeded();
 };
+
+// ── MIGRATE ẢNH CŨ SANG IMGBB ────────────────────────────────────
+function checkMigrateNeeded() {
+  const base64Products = products.filter(p => {
+    const imgs = getProductImages(p);
+    return imgs.some(img => img && img.startsWith('data:'));
+  });
+  const wrap = document.getElementById('migrate-wrap');
+  const countEl = document.getElementById('migrate-count');
+  if (wrap) wrap.style.display = base64Products.length > 0 ? 'block' : 'none';
+  if (countEl) countEl.textContent = base64Products.length;
+}
+
+async function uploadBase64ToImgBB(base64str) {
+  const IMGBB_KEY = '596ccf3842830fc7dee77cbb070dee9d';
+  // Extract base64 data only (remove data:image/xxx;base64, prefix)
+  const base64data = base64str.split(',')[1];
+  const formData = new FormData();
+  formData.append('image', base64data);
+  const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {
+    method: 'POST',
+    body: formData,
+  });
+  const data = await res.json();
+  if (!data.success) throw new Error('ImgBB error: ' + JSON.stringify(data));
+  return data.data.url;
+}
+
+async function migrateAllImages() {
+  const btn = document.getElementById('btn-migrate');
+  const logEl = document.getElementById('migrate-log');
+  logEl.style.display = 'block';
+  logEl.innerHTML = '⏳ Đang bắt đầu migrate...';
+  btn.disabled = true;
+  btn.style.opacity = '0.6';
+
+  let successCount = 0, failCount = 0;
+
+  for (const p of products) {
+    const imgs = getProductImages(p);
+    const hasBase64 = imgs.some(img => img && img.startsWith('data:'));
+    if (!hasBase64) continue;
+
+    logEl.innerHTML += `<br>🔄 Đang xử lý: <b>${p.name}</b>...`;
+
+    try {
+      // Migrate images[] array
+      let newImages = [];
+      if (p.images && p.images.length > 0) {
+        for (let i = 0; i < p.images.length; i++) {
+          const img = p.images[i];
+          if (img && img.startsWith('data:')) {
+            const url = await uploadBase64ToImgBB(img);
+            newImages.push(url);
+            logEl.innerHTML += ` ✅ ảnh ${i+1}`;
+          } else {
+            newImages.push(img);
+          }
+        }
+        await db.ref('products/' + p.id + '/images').set(newImages);
+      }
+
+      // Migrate legacy image field
+      if (p.image && p.image.startsWith('data:')) {
+        const url = newImages[0] || await uploadBase64ToImgBB(p.image);
+        await db.ref('products/' + p.id + '/image').set(url);
+      } else if (newImages.length > 0 && !p.image) {
+        await db.ref('products/' + p.id + '/image').set(newImages[0]);
+      }
+
+      successCount++;
+    } catch (err) {
+      failCount++;
+      logEl.innerHTML += ` ❌ Lỗi: ${err.message}`;
+    }
+  }
+
+  logEl.innerHTML += `<br><br>🎉 <b>Hoàn tất!</b> Thành công: ${successCount} sản phẩm${failCount > 0 ? `, Lỗi: ${failCount}` : ''}.`;
+  btn.disabled = false;
+  btn.style.opacity = '1';
+  checkMigrateNeeded();
+}
 
 // Báo cáo cuối ngày được xử lý bởi GitHub Actions — không cần code ở đây.
 </script>

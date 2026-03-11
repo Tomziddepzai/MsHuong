@@ -794,6 +794,7 @@ db.ref('products').on('value', snap => {
   }
   renderShop();
   if (document.getElementById('admin-panel').classList.contains('show')) renderAdminList();
+  checkMigrateNeeded();
 });
 
 function getProductImages(p) {

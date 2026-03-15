@@ -427,6 +427,22 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
 .cat-drop-item .cdi-icon{font-size:16px;width:22px;text-align:center;flex-shrink:0;}
 .cat-drop-item+.cat-drop-item{border-top:1px solid #f5f5f5;}
 
+
+
+
+
+/* ── FEEDBACK POPUP ── */
+
+
+
+
+
+
+.feedback-textarea{width:100%;padding:12px 14px;border:2px solid #eee;border-radius:12px;font-family:'Nunito',sans-serif;font-size:15px;outline:none;resize:none;transition:border-color 0.2s;min-height:90px;}
+.feedback-textarea:focus{border-color:var(--primary);}
+.fb-actions{display:flex;gap:8px;margin-top:12px;}
+.btn-fb-send{flex:1;padding:12px;background:linear-gradient(135deg,var(--primary),#FF8C42);color:white;border:none;border-radius:12px;font-family:'Baloo 2',cursive;font-size:15px;font-weight:700;cursor:pointer;touch-action:manipulation;}
+.btn-fb-skip{padding:12px 16px;background:#f0f0f0;color:var(--muted);border:none;border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;cursor:pointer;touch-action:manipulation;}
 </style>
 </head>
 <body>
@@ -518,6 +534,14 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
     <h3>Đặt hàng thành công!</h3>
     <p>Đơn hàng đã gửi đến cô Hường.<br>Cô sẽ liên hệ số <strong id="confirm-phone"></strong> sớm nhất nhé!</p>
     <button class="btn-ok" onclick="closePopup('popup-success')">🛍️ Tiếp tục mua sắm</button>
+    <div style="margin-top:16px;border-top:1.5px dashed #eee;padding-top:14px;">
+      <p style="font-size:13px;font-weight:800;color:var(--dark);margin-bottom:8px;">💬 Ba mẹ và các em muốn MSHUONG đăng thêm sản phẩm gì?</p>
+      <textarea class="feedback-textarea" id="feedback-text" placeholder="Viết ý kiến, đề xuất sản phẩm..." rows="3"></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <button class="btn-fb-skip" onclick="closePopup('popup-success')">Bỏ qua</button>
+        <button class="btn-fb-send" onclick="sendFeedback()">📤 Gửi</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1306,7 +1330,7 @@ function sendOrder(){
 📦 Sản phẩm:
 ${list}
 ━━━━━━━━━━━━━━━━━━━
-💰 Tổng cộng: ${total.toLocaleString('vi-VN')}đ
+💳 Tổng thanh toán: ${total.toLocaleString('vi-VN')}đ
 📝 Ghi chú: ${note||'Không có'}
 ━━━━━━━━━━━━━━━━━━━
 ⏰ ${new Date().toLocaleString('vi-VN')}`;
@@ -1844,6 +1868,32 @@ function renderCatPills() {} // compatibility stub
 
 
 // Báo cáo cuối ngày được xử lý bởi GitHub Actions — không cần code ở đây.
+
+
+
+// ── FEEDBACK ─────────────────────────────────────────────────────
+const BOT2_TOKEN = '8776010479:AAFAaKWJHj1oorwfucNEaP8p2Axgn2gK2Ko';
+const CHAT2_ID   = '8547038863';
+
+
+function sendFeedback() {
+  const text = document.getElementById('feedback-text').value.trim();
+  if (!text) { skipFeedback(); return; }
+  const msg =
+`💬 Ý KIẾN KHÁCH HÀNG – MsHuongShop
+━━━━━━━━━━━━━━━━━━━
+👤 ${customer.name}
+📞 ${customer.phone}
+━━━━━━━━━━━━━━━━━━━
+${text}
+━━━━━━━━━━━━━━━━━━━
+⏰ ${new Date().toLocaleString('vi-VN')}`;
+  const params = new URLSearchParams({chat_id: CHAT2_ID, text: msg});
+  fetch(`https://api.telegram.org/bot${BOT2_TOKEN}/sendMessage?${params}`)
+    .catch(()=>{});
+  closePopup('popup-success');
+}
+
 </script>
 </body>
 </html>

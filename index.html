@@ -427,17 +427,35 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
 .cat-drop-item .cdi-icon{font-size:16px;width:22px;text-align:center;flex-shrink:0;}
 .cat-drop-item+.cat-drop-item{border-top:1px solid #f5f5f5;}
 
+/* ── FLASH SALE WALL ── */
+.flash-wall-wrap{position:relative;margin-bottom:32px;}
+.flash-wall-blur{filter:blur(10px) brightness(0.35);pointer-events:none;user-select:none;}
+.flash-wall-overlay{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;background:rgba(122,31,61,0.25);border-radius:var(--radius);}
+.flash-wall{background:linear-gradient(135deg,#7a1f3d 0%,#5a1530 100%);border-radius:var(--radius);padding:24px 20px;text-align:center;position:relative;overflow:hidden;box-shadow:0 12px 48px rgba(122,31,61,0.45);width:100%;}
+.flash-wall::before{content:'⚡';position:absolute;font-size:200px;opacity:0.05;top:-30px;left:50%;transform:translateX(-50%);pointer-events:none;}
+.flash-wall-title{font-family:'Baloo 2',cursive;font-size:22px;font-weight:800;color:#dfd1bb;margin-bottom:6px;letter-spacing:1px;}
+.flash-wall-sub{font-size:13px;color:rgba(223,209,187,0.65);margin-bottom:28px;}
+.flash-wall-clock{display:inline-flex;align-items:center;gap:10px;background:rgba(0,0,0,0.25);border-radius:16px;padding:18px 28px;}
+.fw-unit{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.fw-num{font-family:'Baloo 2',cursive;font-size:36px;font-weight:800;color:#dfd1bb;line-height:1;min-width:52px;background:rgba(0,0,0,0.3);border-radius:10px;padding:6px 8px;}
+.fw-label{font-size:10px;font-weight:800;color:rgba(223,209,187,0.5);text-transform:uppercase;letter-spacing:1px;}
+.fw-sep{font-family:'Baloo 2',cursive;font-size:30px;font-weight:800;color:#dfd1bb;opacity:0.5;margin-bottom:18px;}
+@media(max-width:480px){.fw-num{font-size:26px;min-width:38px;}.flash-wall-clock{gap:6px;padding:14px 16px;}}
 
+/* ── FLASH SALE LOCKED CATEGORY ── */
+.cat-drop-item.flash-locked{color:#7a1f3d!important;background:#fdf4f7;cursor:pointer;position:relative;}
+.cat-drop-item.flash-locked:hover{background:#f5e6ec;color:#7a1f3d!important;}
+.flash-lock-badge{display:inline-flex;align-items:center;gap:4px;margin-left:auto;background:#7a1f3d;color:#dfd1bb;border-radius:100px;padding:2px 8px;font-size:10px;font-weight:800;white-space:nowrap;flex-shrink:0;}
+.cat-drop-item.flash-unlocked{color:#7a1f3d!important;font-weight:800;}
+.cat-drop-item.flash-unlocked:hover{background:#fdf4f7;color:#7a1f3d!important;}
 
-
+/* ── FLASH SALE BANNER ── */
+.flash-banner{background:#7a1f3d;overflow:hidden;white-space:nowrap;padding:14px 0;width:100%;}
+.flash-banner-track{display:inline-flex;align-items:center;gap:0;animation:marquee 18s linear infinite;}
+.flash-banner-item{display:inline-flex;align-items:center;gap:10px;color:#dfd1bb;font-family:'Baloo 2',cursive;font-size:22px;font-weight:800;letter-spacing:1px;padding:0 48px;white-space:nowrap;}
+@keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
 /* ── FEEDBACK POPUP ── */
-
-
-
-
-
-
 .feedback-textarea{width:100%;padding:12px 14px;border:2px solid #eee;border-radius:12px;font-family:'Nunito',sans-serif;font-size:15px;outline:none;resize:none;transition:border-color 0.2s;min-height:90px;}
 .feedback-textarea:focus{border-color:var(--primary);}
 .fb-actions{display:flex;gap:8px;margin-top:12px;}
@@ -504,6 +522,24 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
       </button>
       <div class="cat-dropdown" id="cat-dropdown" style="display:none"></div>
     </div>
+  </div>
+</div>
+
+<!-- FLASH SALE BANNER -->
+<div class="flash-banner">
+  <div class="flash-banner-track" id="flash-banner-track">
+    <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
+    <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
+    <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
+    <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
+    <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
+    <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
+    <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
+    <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
+    <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
+    <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
+    <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
+    <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
   </div>
 </div>
 
@@ -642,6 +678,7 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
               <option value="Bút & Viết">✏️ Bút & Viết</option>
               <option value="Dụng cụ học tập">📐 Dụng cụ học tập</option>
               <option value="HOT TREND">🔥 HOT TREND</option>
+              <option value="FLASH SALE 21/03">⚡ FLASH SALE 21/03</option>
             </select>
           </div>
           <div class="field-row full">
@@ -752,6 +789,23 @@ firebase.initializeApp({
 });
 const db = firebase.database();
 
+// ── SERVER TIME (chống chỉnh giờ máy khách) ─────────────────────
+// Lấy giờ server thực lúc load trang, sau đó tự đếm bằng performance.now()
+// performance.now() KHÔNG bị ảnh hưởng khi người dùng chỉnh đồng hồ hệ thống
+let _serverTimeAtLoad = null; // ms epoch của server lúc load
+let _perfAtLoad = performance.now(); // ms kể từ khi trang load
+
+db.ref('.info/serverTimeOffset').on('value', snap => {
+  const offset = snap.val() || 0;
+  _serverTimeAtLoad = Date.now() + offset;
+  _perfAtLoad = performance.now();
+});
+
+function getServerNow() {
+  if (_serverTimeAtLoad === null) return Date.now(); // fallback trước khi Firebase trả về
+  return _serverTimeAtLoad + (performance.now() - _perfAtLoad);
+}
+
 let adminOptionTags = [];
 
 function addOptionTag(){
@@ -823,6 +877,7 @@ const DEFAULT_PRODUCTS = [
 ];
 
 const CATEGORIES = [
+  {key:'FLASH SALE 21/03', icon:'⚡'},
   {key:'Bút & Viết',      icon:'✏️'},
   {key:'Vở & Sổ',         icon:'📓'},
   {key:'Dụng cụ học tập', icon:'📐'},
@@ -888,6 +943,68 @@ function clearSearch() {
   renderShop();
 }
 
+// ── FLASH SALE COUNTDOWN ─────────────────────────────────────────
+const FLASH_SALE_DATE = new Date('2026-03-21T00:00:00');
+
+function isFlashSaleUnlocked() {
+  return getServerNow() >= FLASH_SALE_DATE.getTime();
+}
+
+function getFlashCountdown() {
+  const now = getServerNow();
+  const diff = FLASH_SALE_DATE.getTime() - now;
+  if (diff <= 0) return '🎉 Đang diễn ra!';
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  if (d > 0) return `${d}N ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+function getFlashCountdownParts() {
+  const now = getServerNow();
+  const diff = Math.max(0, FLASH_SALE_DATE.getTime() - now);
+  return {
+    d: String(Math.floor(diff / 86400000)).padStart(2,'0'),
+    h: String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0'),
+    m: String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0'),
+    s: String(Math.floor((diff % 60000) / 1000)).padStart(2,'0'),
+  };
+}
+
+// Tick every second: update badge + banner + wall countdown
+setInterval(() => {
+  const unlocked = isFlashSaleUnlocked();
+
+  // Update lock badge in dropdown if open
+  document.querySelectorAll('.flash-lock-badge').forEach(b => b.textContent = getFlashCountdown());
+
+  // Update banner countdown text
+  const bannerItems = document.querySelectorAll('.flash-banner-item');
+  if (bannerItems.length) {
+    bannerItems.forEach(el => {
+      el.textContent = unlocked
+        ? '⚡ FLASH SALE 21/03 — ĐANG DIỄN RA!'
+        : '⚡ FLASH SALE THỨ 7 NGÀY 21/03';
+    });
+  }
+
+  // Update flash wall clock
+  const fwWall = document.getElementById('flash-wall');
+  if (fwWall) {
+    if (unlocked) {
+      renderShop();
+    } else {
+      const cd = getFlashCountdownParts();
+      document.querySelectorAll('.fw-tick-d').forEach(el => el.textContent = cd.d);
+      document.querySelectorAll('.fw-tick-h').forEach(el => el.textContent = cd.h);
+      document.querySelectorAll('.fw-tick-m').forEach(el => el.textContent = cd.m);
+      document.querySelectorAll('.fw-tick-s').forEach(el => el.textContent = cd.s);
+    }
+  }
+}, 1000);
+
 function renderShop() {
   const container = document.getElementById('shop-container');
   if (isAdminMode) container.classList.add('admin-mode');
@@ -898,6 +1015,56 @@ function renderShop() {
   CATEGORIES.forEach(cat => {
     // Skip category if drawer filter active and doesn't match
     if (activeCategory && cat.key !== activeCategory) return;
+
+    // FLASH SALE chưa mở khoá → hiện mờ + wall đè lên
+    if (cat.key === 'FLASH SALE 21/03' && !isFlashSaleUnlocked()) {
+      const fsItems = products.filter(p => p.cat === 'FLASH SALE 21/03');
+      let blurredCards = '';
+      if (fsItems.length) {
+        blurredCards = fsItems.map(p => {
+          const imgs = getProductImages(p);
+          return `<div class="product-card">
+            <div class="product-img">${imgs.length ? `<img src="${imgs[0]}" alt="">` : `<span>${p.emoji||'📦'}</span>`}</div>
+            <div class="product-info">
+              <div class="product-name">${p.name}</div>
+              <div class="product-price">${p.price.toLocaleString('vi-VN')}đ <span class="product-unit">/${p.unit}</span></div>
+            </div>
+          </div>`;
+        }).join('');
+      } else {
+        blurredCards = Array(4).fill(`<div class="product-card">
+          <div class="product-img"><span>📦</span></div>
+          <div class="product-info">
+            <div class="product-name" style="background:#ddd;height:14px;border-radius:6px;width:80%"></div>
+            <div class="product-price" style="background:#eee;height:12px;border-radius:6px;width:50%;margin-top:8px"></div>
+          </div>
+        </div>`).join('');
+      }
+      const cd = getFlashCountdownParts();
+      html += `<div class="section-title">⚡ FLASH SALE 21/03</div>
+      <div class="flash-wall-wrap" style="margin-bottom:32px">
+        <div class="flash-wall-blur">
+          <div class="products-grid">${blurredCards}</div>
+        </div>
+        <div class="flash-wall-overlay">
+          <div class="flash-wall" id="flash-wall">
+            <div class="flash-wall-title">⚡ FLASH SALE THỨ 7 NGÀY 21/03</div>
+            <div class="flash-wall-sub">Sản phẩm mở bán lúc 00:00 ngày 21/03 — Hãy đón chờ nhé!</div>
+            <div class="flash-wall-clock">
+              <div class="fw-unit"><span class="fw-num fw-tick-d">${cd.d}</span><span class="fw-label">Ngày</span></div>
+              <span class="fw-sep">:</span>
+              <div class="fw-unit"><span class="fw-num fw-tick-h">${cd.h}</span><span class="fw-label">Giờ</span></div>
+              <span class="fw-sep">:</span>
+              <div class="fw-unit"><span class="fw-num fw-tick-m">${cd.m}</span><span class="fw-label">Phút</span></div>
+              <span class="fw-sep">:</span>
+              <div class="fw-unit"><span class="fw-num fw-tick-s">${cd.s}</span><span class="fw-label">Giây</span></div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+      return;
+    }
+
     let items = products.filter(p => p.cat===cat.key);
     if (searchQuery) items = items.filter(p => p.name.toLowerCase().includes(searchQuery)||p.cat.toLowerCase().includes(searchQuery));
     totalMatch += items.length;
@@ -1048,7 +1215,7 @@ function renderAdminList(){
         <span class="pla-cat-header-left">${icon} ${cat} <span class="pla-cat-badge">${items.length}</span></span>
         <span class="pla-cat-arrow ${isOpen?'open':''}">▼</span>
       </div>
-      <div class="pla-cat-body" id="pla-cat-${cat.replace(/\s/g,'_')}" style="${isOpen?'':'display:none'}">
+      <div class="pla-cat-body" id="pla-cat-${cat.replace(/\s/g,'_').replace(/\//g,'_')}" style="${isOpen?'':'display:none'}">
         ${rows}
       </div>
     </div>`;
@@ -1056,7 +1223,7 @@ function renderAdminList(){
 }
 
 function toggleAdminCat(cat){
-  const key = cat.replace(/\s/g,'_');
+  const key = cat.replace(/\s/g,'_').replace(/\//g,'_');
   const body = document.getElementById('pla-cat-'+key);
   if(!body) return;
   const isHidden = body.style.display==='none';
@@ -1824,6 +1991,20 @@ function openCatDropdown() {
     <span class="cdi-icon">🏪</span> Tất cả
   </div>`;
   CATEGORIES.forEach(cat => {
+    if (cat.key === 'FLASH SALE 21/03') {
+      const unlocked = isFlashSaleUnlocked();
+      if (unlocked) {
+        html += `<div class="cat-drop-item flash-unlocked${activeCategory===cat.key?' active':''}" onclick="selectCategory('${cat.key}')">
+          <span class="cdi-icon">⚡</span> FLASH SALE 21/03
+        </div>`;
+      } else {
+        html += `<div class="cat-drop-item flash-locked" onclick="selectCategory('FLASH SALE 21/03')">
+          <span class="cdi-icon">🔒</span> FLASH SALE 21/03
+          <span class="flash-lock-badge">${getFlashCountdown()}</span>
+        </div>`;
+      }
+      return;
+    }
     const count = products.filter(p => p.cat === cat.key).length;
     if (!count) return;
     html += `<div class="cat-drop-item${activeCategory===cat.key?' active':''}" onclick="selectCategory('${cat.key}')">
@@ -1878,7 +2059,7 @@ const CHAT2_ID   = '8547038863';
 
 function sendFeedback() {
   const text = document.getElementById('feedback-text').value.trim();
-  if (!text) { skipFeedback(); return; }
+  if (!text) { closePopup('popup-success'); return; }
   const msg =
 `💬 Ý KIẾN KHÁCH HÀNG – MsHuongShop
 ━━━━━━━━━━━━━━━━━━━

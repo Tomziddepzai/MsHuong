@@ -2639,40 +2639,101 @@ function renderNewsAdmin() {
   }).join('');
 }
 
-function triggerNewsImg() {
+
+// ── NEWS IMAGE / VIDEO UPLOAD ─────────────────────────────────────
+function triggerNewsSlot(idx) {
+  newsCurrentImgSlot = idx;
   document.getElementById('news-img-file').value = '';
   document.getElementById('news-img-file').click();
 }
 
-async function handleNewsImgUpload(input) {
+function triggerNewsVideo() {
+  document.getElementById('news-video-file').value = '';
+  document.getElementById('news-video-file').click();
+}
+
+async function handleNewsSlotUpload(input) {
   const file = input.files[0];
   if (!file) return;
-  const slot = document.getElementById('news-img-slot');
-  slot.innerHTML = '<span style="font-size:12px;color:#999">⏳</span>';
+  const idx = newsCurrentImgSlot;
+  const slot = document.getElementById('news-slot-' + idx);
+  if (slot) slot.innerHTML = '<span style="font-size:12px;color:#999">Đang tải...</span>';
   try {
     const IMGBB_KEY = '596ccf3842830fc7dee77cbb070dee9d';
     const formData = new FormData();
     formData.append('image', file);
-    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {method:'POST',body:formData});
+    const res = await fetch('https://api.imgbb.com/1/upload?key=' + IMGBB_KEY, {method:'POST',body:formData});
     const data = await res.json();
     if (!data.success) throw new Error('ImgBB lỗi');
-    newsImgUrl = data.data.url;
-    slot.className = 'img-slot filled';
-    slot.innerHTML = `<img src="${newsImgUrl}"><button class="slot-del" onclick="removeNewsImg(event)">✕</button>`;
+    newsImgSlots[idx] = data.data.url;
+    renderNewsImgSlots();
   } catch(err) {
-    alert('Upload ảnh thất bại!\n'+err.message);
-    slot.innerHTML = '<span class="slot-add">＋</span>';
-    newsImgUrl = null;
+    alert('Upload ảnh thất bại! ' + err.message);
+    renderNewsImgSlots();
   }
   input.value = '';
 }
 
-function removeNewsImg(e) {
+async function handleNewsVideoUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const slot = document.getElementById('news-video-slot');
+  if (slot) slot.innerHTML = '<span style="font-size:12px;color:#999">Đang tải video...</span>';
+  if (file.size > 10*1024*1024) {
+    alert('Video quá lớn! Vui lòng chọn video dưới 10MB.');
+    renderNewsVideoSlot();
+    input.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    newsVideoUrl = e.target.result;
+    renderNewsVideoSlot();
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function renderNewsImgSlots() {
+  for (let i = 0; i < 4; i++) {
+    const slot = document.getElementById('news-slot-' + i);
+    if (!slot) continue;
+    if (newsImgSlots[i]) {
+      slot.className = 'img-slot filled';
+      slot.innerHTML = '<img src="' + newsImgSlots[i] + '"><button class="slot-del" onclick="removeNewsSlot(event,' + i + ')">✕</button>';
+      slot.onclick = null;
+    } else {
+      slot.className = 'img-slot';
+      slot.innerHTML = '<span class="slot-add">＋</span>';
+      slot.onclick = (function(idx){ return function(){ triggerNewsSlot(idx); }; })(i);
+    }
+  }
+}
+
+function renderNewsVideoSlot() {
+  const slot = document.getElementById('news-video-slot');
+  if (!slot) return;
+  if (newsVideoUrl) {
+    slot.className = 'img-slot filled';
+    slot.innerHTML = '<video src="' + newsVideoUrl + '" style="width:100%;height:100%;object-fit:cover"></video><button class="slot-del" onclick="removeNewsVideo(event)">✕</button>';
+    slot.onclick = null;
+  } else {
+    slot.className = 'img-slot';
+    slot.innerHTML = '<span class="slot-add">▶</span>';
+    slot.onclick = triggerNewsVideo;
+  }
+}
+
+function removeNewsSlot(e, idx) {
   e.stopPropagation();
-  newsImgUrl = null;
-  const slot = document.getElementById('news-img-slot');
-  slot.className = 'img-slot';
-  slot.innerHTML = '<span class="slot-add">＋</span>';
+  newsImgSlots[idx] = null;
+  renderNewsImgSlots();
+}
+
+function removeNewsVideo(e) {
+  e.stopPropagation();
+  newsVideoUrl = null;
+  renderNewsVideoSlot();
 }
 
 function postNews() {

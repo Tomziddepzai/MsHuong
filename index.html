@@ -455,6 +455,121 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
 .flash-banner-item{display:inline-flex;align-items:center;gap:10px;color:#dfd1bb;font-family:'Baloo 2',cursive;font-size:22px;font-weight:800;letter-spacing:1px;padding:0 48px;white-space:nowrap;}
 @keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
+/* ── FLASH SALE ENDED WALL ── */
+.flash-ended-wall{background:linear-gradient(135deg,#2d2d2d 0%,#1a1a1a 100%);border-radius:var(--radius);padding:32px 20px;text-align:center;position:relative;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.4);width:100%;margin-bottom:32px;}
+.flash-ended-wall::before{content:'⌛';position:absolute;font-size:200px;opacity:0.05;top:-30px;left:50%;transform:translateX(-50%);pointer-events:none;}
+.flash-ended-title{font-family:'Baloo 2',cursive;font-size:22px;font-weight:800;color:#aaa;margin-bottom:8px;}
+.flash-ended-sub{font-size:13px;color:rgba(170,170,170,0.6);}
+
+/* ── FLASH SALE SETUP PANEL ── */
+#flash-setup-panel{position:fixed;inset:0;z-index:850;background:rgba(0,0,0,0.65);display:none;align-items:center;justify-content:center;padding:16px;}
+#flash-setup-panel.show{display:flex;}
+.flash-setup-box{background:white;border-radius:24px;width:100%;max-width:420px;padding:32px 28px;animation:popIn 0.4s cubic-bezier(.34,1.56,.64,1) both;}
+.flash-setup-box h3{font-family:'Baloo 2',cursive;font-size:20px;font-weight:800;color:#7a1f3d;margin-bottom:6px;}
+.flash-setup-box p{font-size:13px;color:var(--muted);margin-bottom:16px;}
+.flash-setup-row{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.flash-setup-row label{font-size:12px;font-weight:800;color:var(--dark);text-transform:uppercase;letter-spacing:0.4px;}
+.flash-setup-input{width:100%;padding:11px 14px;border:2px solid #eee;border-radius:12px;font-family:'Nunito',sans-serif;font-size:16px;outline:none;transition:border-color 0.2s;}
+.flash-setup-input:focus{border-color:#7a1f3d;}
+.flash-setup-current{font-size:12px;color:var(--muted);margin-bottom:14px;background:#f8f9fa;border-radius:10px;padding:10px 14px;line-height:1.8;}
+.flash-setup-current span{font-weight:800;color:#7a1f3d;}
+.btn-flash-setup-save{width:100%;padding:13px;background:linear-gradient(135deg,#7a1f3d,#5a1530);color:#dfd1bb;border:none;border-radius:12px;font-family:'Baloo 2',cursive;font-size:15px;font-weight:700;cursor:pointer;touch-action:manipulation;margin-bottom:8px;}
+.btn-flash-setup-save:hover{opacity:0.9;}
+.btn-flash-setup-cancel{width:100%;padding:10px;background:transparent;color:var(--muted);border:none;font-size:13px;cursor:pointer;touch-action:manipulation;}
+
+/* ── CHIP CHIP TOGGLE BUTTON ── */
+.chipchip-btn-wrap{max-width:960px;margin:0 auto;padding:16px 16px 0;}
+.chipchip-btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:linear-gradient(135deg,#1A1A2E 0%,#2d1f3d 100%);border:none;border-radius:16px;cursor:pointer;touch-action:manipulation;box-shadow:0 4px 20px rgba(26,26,46,0.25);transition:box-shadow 0.2s,transform 0.15s;position:relative;overflow:hidden;}
+.chipchip-btn::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(255,209,102,0.08) 0%,transparent 60%);}
+.chipchip-btn:hover{box-shadow:0 8px 28px rgba(26,26,46,0.35);transform:translateY(-1px);}
+.chipchip-btn-left{display:flex;align-items:center;gap:12px;position:relative;}
+.chipchip-btn-icon{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#FF8C42);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 3px 10px rgba(255,107,53,0.4);}
+.chipchip-btn-texts{}
+.chipchip-btn-title{font-family:'Baloo 2',cursive;font-size:16px;font-weight:800;color:white;text-align:left;line-height:1.2;}
+.chipchip-btn-sub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;text-align:left;}
+.chipchip-btn-right{display:flex;align-items:center;gap:8px;position:relative;}
+.chipchip-new-badge{background:var(--primary);color:white;border-radius:100px;padding:2px 10px;font-size:11px;font-weight:800;display:none;}
+.chipchip-new-badge.show{display:block;}
+.chipchip-arrow{font-size:18px;color:rgba(255,255,255,0.6);transition:transform 0.3s cubic-bezier(.34,1.2,.64,1);}
+.chipchip-btn.open .chipchip-arrow{transform:rotate(180deg);}
+
+/* Expand container */
+.chipchip-expand{max-height:0;overflow:hidden;transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1);}
+.chipchip-expand.open{max-height:9999px;}
+
+/* ── CHUYỆN CỦA CHIP CHIP (Facebook style) ── */
+/* ── CHUYỆN CỦA CHIP CHIP (Facebook style) ── */
+.news-wrap{max-width:960px;margin:0 auto;padding:0 0 8px;}
+.news-section-title{font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.news-list{display:flex;flex-direction:column;gap:14px;}
+
+/* Post card FB style */
+.news-card{background:white;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.08);overflow:hidden;border:1px solid #e4e6eb;}
+.news-post-header{display:flex;align-items:center;gap:10px;padding:14px 16px 8px;}
+.news-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#FF8C42);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 2px 8px rgba(255,107,53,0.3);}
+.news-post-meta{flex:1;}
+.news-post-author{font-weight:800;font-size:14px;color:var(--dark);}
+.news-post-time{font-size:11px;color:var(--muted);margin-top:2px;display:flex;align-items:center;gap:4px;}
+.news-post-title{font-weight:800;font-size:15px;color:var(--dark);padding:0 16px 6px;line-height:1.4;}
+.news-post-content{font-size:14px;color:#1c1e21;padding:0 16px 10px;line-height:1.6;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:8;-webkit-box-orient:vertical;overflow:hidden;}
+.news-post-content.expanded{display:block;-webkit-line-clamp:unset;}
+.news-see-more{color:var(--primary);font-size:13px;font-weight:700;background:none;border:none;cursor:pointer;padding:0 16px 10px;display:block;touch-action:manipulation;}
+
+/* Media grid FB style */
+.news-media-grid{width:100%;background:#000;overflow:hidden;}
+.news-media-grid.count-1 .nm-img{height:400px;object-fit:cover;width:100%;display:block;cursor:zoom-in;}
+.news-media-grid.count-1 .nm-video{width:100%;max-height:420px;display:block;background:#000;}
+.news-media-grid.count-2{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.news-media-grid.count-2 .nm-img{height:250px;object-fit:cover;width:100%;display:block;cursor:zoom-in;}
+.news-media-grid.count-3{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:2px;height:300px;}
+.news-media-grid.count-3 .nm-img:first-child{grid-row:1/3;height:300px;object-fit:cover;width:100%;display:block;cursor:zoom-in;}
+.news-media-grid.count-3 .nm-img{height:149px;object-fit:cover;width:100%;display:block;cursor:zoom-in;}
+.news-media-grid.count-4{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.news-media-grid.count-4 .nm-img{height:200px;object-fit:cover;width:100%;display:block;cursor:zoom-in;}
+.news-media-more{position:relative;}
+.news-media-more::after{content:attr(data-more);position:absolute;inset:0;background:rgba(0,0,0,0.5);color:white;font-size:28px;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',cursive;}
+
+/* Like/comment bar */
+.news-stats-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid #e4e6eb;}
+.news-like-stat{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:4px;}
+.news-comment-stat{font-size:13px;color:var(--muted);cursor:pointer;}
+.news-actions-bar{display:flex;border-bottom:1px solid #e4e6eb;}
+.news-action-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px;border:none;background:none;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;touch-action:manipulation;transition:background 0.15s;border-radius:8px;margin:4px;}
+.news-action-btn:hover{background:#f0f2f5;}
+.news-action-btn.liked{color:#FF6B35;}
+
+/* Comments */
+.news-comments-wrap{padding:8px 16px 4px;}
+.news-comment-input-row{display:flex;align-items:center;gap:8px;padding:6px 16px 10px;}
+.news-comment-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#06D6A0,#00B894);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:white;flex-shrink:0;font-family:'Baloo 2',cursive;}
+.news-comment-input-box{flex:1;background:#f0f2f5;border-radius:20px;padding:8px 14px;display:flex;align-items:center;gap:8px;}
+.news-comment-input{flex:1;border:none;outline:none;background:transparent;font-family:'Nunito',sans-serif;font-size:14px;color:var(--dark);}
+.news-comment-input::placeholder{color:#bbb;}
+.news-comment-send{background:none;border:none;cursor:pointer;font-size:16px;padding:0;touch-action:manipulation;color:var(--primary);}
+.news-comment-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;}
+.news-comment-bubble{background:#f0f2f5;border-radius:18px;padding:8px 12px;flex:1;}
+.news-comment-name{font-weight:800;font-size:12px;color:var(--dark);}
+.news-comment-text{font-size:13px;color:var(--text);margin-top:2px;word-break:break-word;}
+.news-comment-time{font-size:10px;color:#bbb;margin-top:4px;margin-left:44px;}
+
+/* Nút xem thêm news */
+.news-load-more{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;margin-top:4px;background:white;border:2px solid var(--primary);border-radius:14px;font-family:'Baloo 2',cursive;font-size:15px;font-weight:800;color:var(--primary);cursor:pointer;touch-action:manipulation;transition:all 0.2s;box-shadow:0 4px 16px rgba(255,107,53,0.15);}
+.news-load-more:hover{background:var(--primary);color:white;box-shadow:0 6px 20px rgba(255,107,53,0.35);transform:translateY(-2px);}
+.news-load-more .nlm-count{background:var(--primary);color:white;border-radius:100px;padding:2px 10px;font-size:13px;}
+.news-load-more:hover .nlm-count{background:white;color:var(--primary);}
+
+/* News empty */
+.news-empty{text-align:center;padding:24px;color:var(--muted);font-size:13px;background:white;border-radius:16px;border:1px dashed #e4e6eb;}
+
+/* ── NEWS ADMIN ── */
+.news-admin-list{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+.news-admin-item{background:#f8f9fa;border-radius:10px;padding:10px 12px;display:flex;align-items:flex-start;gap:10px;border:1.5px solid #eee;}
+.news-admin-item-info{flex:1;min-width:0;}
+.news-admin-item-title{font-weight:800;font-size:12px;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.news-admin-item-preview{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.news-admin-thumb{width:36px;height:36px;border-radius:8px;overflow:hidden;background:#fff3e0;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.news-admin-thumb img{width:100%;height:100%;object-fit:cover;}
+
 /* ── FEEDBACK POPUP ── */
 .feedback-textarea{width:100%;padding:12px 14px;border:2px solid #eee;border-radius:12px;font-family:'Nunito',sans-serif;font-size:15px;outline:none;resize:none;transition:border-color 0.2s;min-height:90px;}
 .feedback-textarea:focus{border-color:var(--primary);}
@@ -496,6 +611,7 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
   <div class="header-right">
     <div class="user-chip" id="user-chip">👤 Khách</div>
     <button class="admin-btn" onclick="openAdminLogin()" style="position:relative">⚙️<span class="order-badge" id="order-badge"></span></button>
+
     <button class="cart-btn" onclick="toggleCart()">
       🛒 Giỏ hàng <div class="cart-count" id="cart-count">0</div>
     </button>
@@ -540,6 +656,28 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
     <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
     <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
     <span class="flash-banner-item">⚡ FLASH SALE THỨ 7 NGÀY 21/03</span>
+  </div>
+</div>
+
+<!-- CHUYỆN CỦA CHIP CHIP -->
+<div class="chipchip-btn-wrap">
+  <button class="chipchip-btn" id="chipchip-btn" onclick="toggleChipChip()">
+    <div class="chipchip-btn-left">
+      <div class="chipchip-btn-icon">💌</div>
+      <div class="chipchip-btn-texts">
+        <div class="chipchip-btn-title">CHUYỆN CỦA SHOP 🧸</div>
+        <div class="chipchip-btn-sub" id="chipchip-sub">Tin tức & câu chuyện từ shop</div>
+      </div>
+    </div>
+    <div class="chipchip-btn-right">
+      <span class="chipchip-new-badge" id="chipchip-new-badge">MỚI</span>
+      <span class="chipchip-arrow">▾</span>
+    </div>
+  </button>
+  <div class="chipchip-expand" id="chipchip-expand">
+    <div class="news-wrap" id="news-wrap" style="padding-top:12px">
+      <div class="news-list" id="news-list"></div>
+    </div>
   </div>
 </div>
 
@@ -660,6 +798,12 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
         <button class="ap-tab" id="apt-orders" onclick="switchAdminTab('orders')">
           📋 Đơn hàng <span class="ap-tab-count hot" id="apt-count-orders">0</span>
         </button>
+        <button class="ap-tab" id="apt-flashsetup" onclick="switchAdminTab('flashsetup')">
+          ⚡ Flash Sale
+        </button>
+        <button class="ap-tab" id="apt-news" onclick="switchAdminTab('news')">
+          📢 News
+        </button>
       </div>
 
       <!-- ── TAB: SẢN PHẨM ── -->
@@ -754,6 +898,64 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
         </div>
       </div>
 
+      <!-- ── TAB: NEWS ── -->
+      <div class="admin-tab-section" id="admin-tab-news">
+        <div class="admin-section">
+          <div class="admin-section-title">➕ Đăng bài mới</div>
+          <div class="field-row full">
+            <input class="a-input" id="news-title-inp" placeholder="Tiêu đề bài đăng" maxlength="100">
+          </div>
+          <div class="field-row full">
+            <textarea class="a-input" id="news-content-inp" placeholder="Nội dung bài đăng (200–400 chữ)..." rows="7" maxlength="2000" style="resize:vertical;font-size:15px;" oninput="updateNewsCharCount(this)"></textarea>
+              <div id="news-char-count" style="text-align:right;font-size:11px;font-weight:700;color:var(--muted);margin-top:4px;">0 / 2000 ký tự</div>
+          </div>
+          <div class="field-row full">
+            <div class="multi-img-section" style="margin-bottom:0">
+              <div class="multi-img-title">📷 Ảnh (tối đa 4) + 🎬 Video (tối đa 1)</div>
+              <div class="multi-img-grid" id="news-img-slots">
+                <div class="img-slot" id="news-slot-0" onclick="triggerNewsSlot(0)"><span class="slot-add">＋</span></div>
+                <div class="img-slot" id="news-slot-1" onclick="triggerNewsSlot(1)"><span class="slot-add">＋</span></div>
+                <div class="img-slot" id="news-slot-2" onclick="triggerNewsSlot(2)"><span class="slot-add">＋</span></div>
+                <div class="img-slot" id="news-slot-3" onclick="triggerNewsSlot(3)"><span class="slot-add">＋</span></div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="multi-img-title">🎬 Video</div>
+                <div class="img-slot" id="news-video-slot" style="aspect-ratio:16/9;border-radius:10px;" onclick="triggerNewsVideo()"><span class="slot-add">▶</span></div>
+              </div>
+              <input type="file" id="news-img-file" accept="image/*" style="display:none" onchange="handleNewsSlotUpload(this)">
+              <input type="file" id="news-video-file" accept="video/*" style="display:none" onchange="handleNewsVideoUpload(this)">
+            </div>
+          </div>
+          <button class="btn-add-product" onclick="postNews()" style="margin-top:8px">📣 Đăng bài</button>
+        </div>
+        <div class="admin-section">
+          <div class="admin-section-title">📋 Danh sách tin (<span id="news-count">0</span>)</div>
+          <div class="news-admin-list" id="news-admin-list">
+            <div style="text-align:center;color:var(--muted);padding:16px;font-size:13px">Chưa có tin nào</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TAB: FLASH SALE SETUP ── -->
+      <div class="admin-tab-section" id="admin-tab-flashsetup">
+        <div class="admin-section">
+          <div class="admin-section-title">⚡ Cài đặt thời gian Flash Sale</div>
+          <div style="background:#f8f9fa;border-radius:10px;padding:10px 14px;font-size:12px;color:var(--muted);line-height:1.8;margin-bottom:14px;">
+            🟢 Mở: <span id="flash-admin-open-label" style="font-weight:800;color:#7a1f3d"></span><br>
+            🔴 Đóng: <span id="flash-admin-close-label" style="font-weight:800;color:#7a1f3d"></span>
+          </div>
+          <div class="field-row full">
+            <label style="font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;display:block;margin-bottom:6px;">🟢 Ngày giờ MỞ bán</label>
+            <input type="datetime-local" class="a-input" id="flash-admin-input-open">
+          </div>
+          <div class="field-row full" style="margin-bottom:16px;">
+            <label style="font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;display:block;margin-bottom:6px;">🔴 Ngày giờ ĐÓNG bán</label>
+            <input type="datetime-local" class="a-input" id="flash-admin-input-close">
+          </div>
+          <button class="btn-add-product" onclick="saveFlashSetupAdmin()" style="background:linear-gradient(135deg,#7a1f3d,#5a1530);color:#dfd1bb;">💾 Lưu & Áp dụng</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -790,19 +992,15 @@ firebase.initializeApp({
 const db = firebase.database();
 
 // ── SERVER TIME (chống chỉnh giờ máy khách) ─────────────────────
-// Lấy giờ server thực lúc load trang, sau đó tự đếm bằng performance.now()
-// performance.now() KHÔNG bị ảnh hưởng khi người dùng chỉnh đồng hồ hệ thống
-let _serverTimeAtLoad = null; // ms epoch của server lúc load
-let _perfAtLoad = performance.now(); // ms kể từ khi trang load
-
+let _serverTimeAtLoad = null;
+let _perfAtLoad = performance.now();
 db.ref('.info/serverTimeOffset').on('value', snap => {
   const offset = snap.val() || 0;
   _serverTimeAtLoad = Date.now() + offset;
   _perfAtLoad = performance.now();
 });
-
 function getServerNow() {
-  if (_serverTimeAtLoad === null) return Date.now(); // fallback trước khi Firebase trả về
+  if (_serverTimeAtLoad === null) return Date.now();
   return _serverTimeAtLoad + (performance.now() - _perfAtLoad);
 }
 
@@ -944,10 +1142,38 @@ function clearSearch() {
 }
 
 // ── FLASH SALE COUNTDOWN ─────────────────────────────────────────
-const FLASH_SALE_DATE = new Date('2026-03-21T00:00:00');
+let FLASH_SALE_DATE     = new Date('2026-03-21T00:00:00');
+let FLASH_SALE_END_DATE = new Date('2026-03-22T00:00:00');
+
+db.ref('config/flashSaleDate').on('value', snap => {
+  if (snap.val()) {
+    FLASH_SALE_DATE = new Date(snap.val());
+    if (products.length) renderShop();
+  }
+});
+db.ref('config/flashSaleEndDate').on('value', snap => {
+  if (snap.val()) {
+    FLASH_SALE_END_DATE = new Date(snap.val());
+    if (products.length) renderShop();
+  }
+});
+
+// Tên Flash Sale tự động theo FLASH_SALE_DATE
+function getFlashSaleLabel(short=false) {
+  const d = FLASH_SALE_DATE;
+  const days = ['CN','T2','T3','T4','T5','T6','T7'];
+  const thu = days[d.getDay()];
+  const dd = String(d.getDate()).padStart(2,'0');
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  if (short) return `FLASH SALE ${dd}/${mm}`;
+  return `FLASH SALE ${thu} NGÀY ${dd}/${mm}`;
+}
 
 function isFlashSaleUnlocked() {
   return getServerNow() >= FLASH_SALE_DATE.getTime();
+}
+function isFlashSaleEnded() {
+  return getServerNow() >= FLASH_SALE_END_DATE.getTime();
 }
 
 function getFlashCountdown() {
@@ -984,9 +1210,13 @@ setInterval(() => {
   const bannerItems = document.querySelectorAll('.flash-banner-item');
   if (bannerItems.length) {
     bannerItems.forEach(el => {
-      el.textContent = unlocked
-        ? '⚡ FLASH SALE 21/03 — ĐANG DIỄN RA!'
-        : '⚡ FLASH SALE THỨ 7 NGÀY 21/03';
+      if (isFlashSaleEnded()) {
+        el.textContent = `⌛ ${getFlashSaleLabel()} — ĐÃ KẾT THÚC`;
+      } else if (unlocked) {
+        el.textContent = `⚡ ${getFlashSaleLabel()} — ĐANG DIỄN RA!`;
+      } else {
+        el.textContent = `⚡ ${getFlashSaleLabel()}`;
+      }
     });
   }
 
@@ -1016,6 +1246,16 @@ function renderShop() {
     // Skip category if drawer filter active and doesn't match
     if (activeCategory && cat.key !== activeCategory) return;
 
+    // FLASH SALE đã kết thúc
+    if (cat.key === 'FLASH SALE 21/03' && isFlashSaleEnded()) {
+      html += `<div class="section-title">⚡ ${getFlashSaleLabel()}</div>
+      <div class="flash-ended-wall">
+        <div class="flash-ended-title">⌛ Flash Sale đã kết thúc</div>
+        <div class="flash-ended-sub">Cảm ơn các em đã tham gia! Hẹn gặp lại ở đợt sale tiếp theo 🎉</div>
+      </div>`;
+      return;
+    }
+
     // FLASH SALE chưa mở khoá → hiện mờ + wall đè lên
     if (cat.key === 'FLASH SALE 21/03' && !isFlashSaleUnlocked()) {
       const fsItems = products.filter(p => p.cat === 'FLASH SALE 21/03');
@@ -1023,33 +1263,35 @@ function renderShop() {
       if (fsItems.length) {
         blurredCards = fsItems.map(p => {
           const imgs = getProductImages(p);
-          return `<div class="product-card">
-            <div class="product-img">${imgs.length ? `<img src="${imgs[0]}" alt="">` : `<span>${p.emoji||'📦'}</span>`}</div>
-            <div class="product-info">
-              <div class="product-name">${p.name}</div>
-              <div class="product-price">${p.price.toLocaleString('vi-VN')}đ <span class="product-unit">/${p.unit}</span></div>
-            </div>
-          </div>`;
+          const imgHtmlBlur = imgs.length
+            ? '<img src="' + imgs[0] + '" alt="">'
+            : '<span>' + (p.emoji||'📦') + '</span>';
+          return '<div class="product-card">'
+            + '<div class="product-img">' + imgHtmlBlur + '</div>'
+            + '<div class="product-info">'
+            + '<div class="product-name">' + p.name + '</div>'
+            + '<div class="product-price">' + p.price.toLocaleString('vi-VN') + 'đ <span class="product-unit">/' + p.unit + '</span></div>'
+            + '</div></div>';
         }).join('');
       } else {
-        blurredCards = Array(4).fill(`<div class="product-card">
-          <div class="product-img"><span>📦</span></div>
-          <div class="product-info">
-            <div class="product-name" style="background:#ddd;height:14px;border-radius:6px;width:80%"></div>
-            <div class="product-price" style="background:#eee;height:12px;border-radius:6px;width:50%;margin-top:8px"></div>
-          </div>
-        </div>`).join('');
+        const emptyCard = '<div class="product-card">'
+          + '<div class="product-img"><span>📦</span></div>'
+          + '<div class="product-info">'
+          + '<div class="product-name" style="background:#ddd;height:14px;border-radius:6px;width:80%"></div>'
+          + '<div class="product-price" style="background:#eee;height:12px;border-radius:6px;width:50%;margin-top:8px"></div>'
+          + '</div></div>';
+        blurredCards = Array(4).fill(emptyCard).join('');
       }
       const cd = getFlashCountdownParts();
-      html += `<div class="section-title">⚡ FLASH SALE 21/03</div>
+      html += `<div class="section-title">⚡ ${getFlashSaleLabel()}</div>
       <div class="flash-wall-wrap" style="margin-bottom:32px">
         <div class="flash-wall-blur">
           <div class="products-grid">${blurredCards}</div>
         </div>
         <div class="flash-wall-overlay">
           <div class="flash-wall" id="flash-wall">
-            <div class="flash-wall-title">⚡ FLASH SALE THỨ 7 NGÀY 21/03</div>
-            <div class="flash-wall-sub">Sản phẩm mở bán lúc 00:00 ngày 21/03 — Hãy đón chờ nhé!</div>
+            <div class="flash-wall-title">⚡ ${getFlashSaleLabel()}</div>
+            <div class="flash-wall-sub">Sản phẩm mở bán lúc 00:00 ngày ${String(FLASH_SALE_DATE.getDate()).padStart(2,'0')}/${String(FLASH_SALE_DATE.getMonth()+1).padStart(2,'0')} — Hãy đón chờ nhé!</div>
             <div class="flash-wall-clock">
               <div class="fw-unit"><span class="fw-num fw-tick-d">${cd.d}</span><span class="fw-label">Ngày</span></div>
               <span class="fw-sep">:</span>
@@ -1716,6 +1958,8 @@ function switchAdminTab(tab){
   document.querySelectorAll('.ap-tab').forEach(b=>b.classList.toggle('active', b.id==='apt-'+tab));
   document.querySelectorAll('.admin-tab-section').forEach(s=>s.classList.toggle('active', s.id==='admin-tab-'+tab));
   if(tab==='orders') renderOrders();
+  if(tab==='flashsetup') loadFlashSetupAdminUI();
+  if(tab==='news') renderNewsAdmin();
 }
 
 // ── ORDER MANAGEMENT ─────────────────────────────────────────────
@@ -1993,13 +2237,14 @@ function openCatDropdown() {
   CATEGORIES.forEach(cat => {
     if (cat.key === 'FLASH SALE 21/03') {
       const unlocked = isFlashSaleUnlocked();
+      const label = getFlashSaleLabel();
       if (unlocked) {
         html += `<div class="cat-drop-item flash-unlocked${activeCategory===cat.key?' active':''}" onclick="selectCategory('${cat.key}')">
-          <span class="cdi-icon">⚡</span> FLASH SALE 21/03
+          <span class="cdi-icon">⚡</span> ${label}
         </div>`;
       } else {
         html += `<div class="cat-drop-item flash-locked" onclick="selectCategory('FLASH SALE 21/03')">
-          <span class="cdi-icon">🔒</span> FLASH SALE 21/03
+          <span class="cdi-icon">🔒</span> ${label}
           <span class="flash-lock-badge">${getFlashCountdown()}</span>
         </div>`;
       }
@@ -2029,7 +2274,8 @@ function selectCategory(catKey) {
   if (btn && txt) {
     if (catKey) {
       const cat = CATEGORIES.find(c => c.key === catKey);
-      txt.textContent = (cat ? cat.icon + ' ' : '') + catKey;
+      const displayName = catKey === 'FLASH SALE 21/03' ? getFlashSaleLabel() : catKey;
+      txt.textContent = (cat ? cat.icon + ' ' : '') + displayName;
       btn.classList.add('has-filter');
     } else {
       txt.textContent = 'Danh mục';
@@ -2051,6 +2297,445 @@ function renderCatPills() {} // compatibility stub
 // Báo cáo cuối ngày được xử lý bởi GitHub Actions — không cần code ở đây.
 
 
+
+// ── FLASH SALE SETUP FUNCTIONS ───────────────────────────────────
+function loadFlashSetupAdminUI() {
+  const pad = n => String(n).padStart(2,'0');
+  const toLocal = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  const inp1 = document.getElementById('flash-admin-input-open');
+  const inp2 = document.getElementById('flash-admin-input-close');
+  const lbl1 = document.getElementById('flash-admin-open-label');
+  const lbl2 = document.getElementById('flash-admin-close-label');
+  if(inp1) inp1.value = toLocal(FLASH_SALE_DATE);
+  if(inp2) inp2.value = toLocal(FLASH_SALE_END_DATE);
+  if(lbl1) lbl1.textContent = FLASH_SALE_DATE.toLocaleString('vi-VN');
+  if(lbl2) lbl2.textContent = FLASH_SALE_END_DATE.toLocaleString('vi-VN');
+}
+
+function saveFlashSetupAdmin() {
+  const valOpen  = document.getElementById('flash-admin-input-open').value;
+  const valClose = document.getElementById('flash-admin-input-close').value;
+  if (!valOpen || !valClose) { alert('Vui lòng chọn đủ giờ mở và giờ đóng!'); return; }
+  const newOpen  = new Date(valOpen);
+  const newClose = new Date(valClose);
+  if (isNaN(newOpen.getTime()) || isNaN(newClose.getTime())) { alert('Ngày giờ không hợp lệ!'); return; }
+  if (newClose <= newOpen) { alert('Giờ đóng phải sau giờ mở!'); return; }
+  Promise.all([
+    db.ref('config/flashSaleDate').set(newOpen.toISOString()),
+    db.ref('config/flashSaleEndDate').set(newClose.toISOString()),
+  ]).then(() => {
+    document.getElementById('flash-admin-open-label').textContent  = newOpen.toLocaleString('vi-VN');
+    document.getElementById('flash-admin-close-label').textContent = newClose.toLocaleString('vi-VN');
+    alert('✅ Đã lưu!\n🟢 Mở: ' + newOpen.toLocaleString('vi-VN') + '\n🔴 Đóng: ' + newClose.toLocaleString('vi-VN'));
+  }).catch(err => alert('❌ Lỗi: ' + err.message));
+}
+
+// ── CHUYỆN CỦA CHIP CHIP ─────────────────────────────────────────
+let newsItems = [];
+let showAllNews = false; // mặc định chỉ hiện 2 bài đầu
+let newsImgSlots = [null,null,null,null]; // 4 ảnh
+let newsVideoUrl = null;
+let newsCurrentImgSlot = 0;
+
+db.ref('news').on('value', snap => {
+  const data = snap.val();
+  const newItems = data ? Object.values(data).sort((a,b) => b.createdAt - a.createdAt) : [];
+  // Badge "MỚI" nếu có bài mới trong khi đang đóng
+  const expand = document.getElementById('chipchip-expand');
+  const isOpen = expand && expand.classList.contains('open');
+  if (newItems.length > newsItems.length && !isOpen) {
+    const badge = document.getElementById('chipchip-new-badge');
+    if (badge) badge.classList.add('show');
+  }
+  if (newItems.length > newsItems.length) showAllNews = false;
+  newsItems = newItems;
+  updateChipChipSub();
+  renderNews();
+  if (currentAdminTab === 'news') renderNewsAdmin();
+});
+
+function timeSinceNews(ts) {
+  const s = Math.floor((Date.now()-ts)/1000);
+  if (s < 60) return 'vừa xong';
+  const m = Math.floor(s/60); if (m < 60) return m+'p trước';
+  const h = Math.floor(m/60); if (h < 24) return h+'h trước';
+  const d = Math.floor(h/24); if (d < 7) return d+'ng trước';
+  return new Date(ts).toLocaleDateString('vi-VN');
+}
+
+function buildMediaGrid(n) {
+  const imgs = (n.images || (n.image ? [n.image] : [])).filter(Boolean);
+  const video = n.video || null;
+  const total = imgs.length + (video ? 1 : 0);
+  if (!total) return '';
+  let html = '<div class="news-media-grid count-' + Math.min(total,4) + '">';
+  // video trước nếu có và chỉ có video
+  if (video && imgs.length === 0) {
+    html += '<video class="nm-video" controls playsinline preload="metadata" src="' + video + '"></video>';
+  } else {
+    imgs.slice(0,4).forEach(function(src, i) {
+      var isLast = i === 3 && (imgs.length > 4 || (imgs.length === 4 && video));
+      var more = imgs.length - 3 + (video ? 1 : 0);
+      var imgEl = '<img class="nm-img" data-nid="' + n.id + '" data-idx="' + i + '" src="' + src + '" onclick="newsImgClick(this)">';
+      if (isLast && more > 0) {
+        html += '<div class="news-media-more" data-more="+' + more + '">' + imgEl + '</div>';
+      } else {
+        html += imgEl;
+      }
+    });
+    if (video && imgs.length < 4) {
+      html += '<video class="nm-video" controls playsinline preload="metadata" src="' + video + '" style="width:100%;height:200px;object-fit:cover;display:block;"></video>';
+    }
+  }
+  html += '</div>';
+  return html;
+}
+
+function hasMedia(n) {
+  return !!(n.video || (n.images && n.images.length) || n.image);
+}
+function isLongPost(n) {
+  return (n.content && n.content.length > 200) || hasMedia(n);
+}
+function getVisibleNews() {
+  if (showAllNews) return newsItems;
+  if (!newsItems.length) return [];
+  // Bài đầu dài (có media hoặc >200 ký tự) → chỉ hiện 1
+  if (isLongPost(newsItems[0])) return newsItems.slice(0,1);
+  // Bài đầu ngắn → hiện tối đa 2, nhưng nếu bài 2 dài thì thôi
+  if (newsItems.length > 1 && isLongPost(newsItems[1])) return newsItems.slice(0,1);
+  return newsItems.slice(0,2);
+}
+function renderNews() {
+  var wrap = document.getElementById('news-wrap');
+  var list = document.getElementById('news-list');
+  if (!wrap || !list) return;
+  if (!newsItems.length) { list.innerHTML = '<div class="news-empty">Chưa có bài đăng nào 📭</div>'; return; }
+  list.innerHTML = '';
+  var visible = getVisibleNews();
+  visible.forEach(function(n) {
+    var card = document.createElement('div');
+    card.className = 'news-card';
+    card.id = 'ncard-' + n.id;
+    var likes = n.likes || 0;
+    var comments = n.comments ? Object.values(n.comments) : [];
+    var cmtCount = comments.length;
+    var isLong = n.content && n.content.length > 400;
+
+    // Header
+    var hdr = '<div class="news-post-header">'
+      + '<div class="news-avatar">🎒</div>'
+      + '<div class="news-post-meta">'
+      + '<div class="news-post-author">MsHuong Shop</div>'
+      + '<div class="news-post-time">🌐 ' + timeSinceNews(n.createdAt) + '</div>'
+      + '</div></div>';
+
+    // Title + content
+    var body = (n.title ? '<div class="news-post-title">' + n.title + '</div>' : '')
+      + (n.content ? '<div class="news-post-content" id="nc-' + n.id + '">' + n.content + '</div>' : '');
+
+    // See more btn
+    var seeMore = isLong ? '<button class="news-see-more" id="nsm-' + n.id + '" data-nid="' + n.id + '" onclick="newsToggleClick(this)">Xem thêm...</button>' : '';
+
+    // Media
+    var media = buildMediaGrid(n);
+
+    // Stats bar
+    var statsBar = '<div class="news-stats-bar">'
+      + '<span class="news-like-stat" id="nlstat-' + n.id + '">' + (likes > 0 ? '❤️ ' + likes + ' lượt thích' : '') + '</span>'
+      + (cmtCount > 0 ? '<span class="news-comment-stat" data-nid="' + n.id + '" onclick="newsToggleComments(this)">' + cmtCount + ' bình luận</span>' : '')
+      + '</div>';
+
+    // Actions bar
+    var actBar = '<div class="news-actions-bar">'
+      + '<button class="news-action-btn" id="nlike-' + n.id + '" data-nid="' + n.id + '" onclick="newsLikeClick(this)">🤍 Thích</button>'
+      + '<button class="news-action-btn" data-nid="' + n.id + '" onclick="newsToggleComments(this)">💬 Bình luận</button>'
+      + '</div>';
+
+    // Comments section
+    var cmtsHtml = '<div class="news-comments-wrap" id="ncmts-' + n.id + '" style="display:none">'
+      + renderComments(comments, n.id)
+      + '<div class="news-comment-input-row">'
+      + '<div class="news-comment-avatar" id="ncmtav-' + n.id + '">' + (customer.name ? customer.name.slice(-1).toUpperCase() : '?') + '</div>'
+      + '<div class="news-comment-input-box">'
+      + '<input class="news-comment-input" id="ncmtinp-' + n.id + '" placeholder="Viết bình luận..." data-nid="' + n.id + '" onkeydown="cmtKeydown(event, this)">'
+      + '<button class="news-comment-send" data-nid="' + n.id + '" onclick="newsPostComment(this)">➤</button>'
+      + '</div></div></div>';
+
+    card.innerHTML = hdr + body + seeMore + media + statsBar + actBar + cmtsHtml;
+    list.appendChild(card);
+  });
+  newsItems.forEach(function(n) { updateLikeUI(n.id, n.likes||0); });
+
+  // Nút xem thêm
+  var existBtn = document.getElementById('news-load-more-btn');
+  if (existBtn) existBtn.remove();
+  var visibleCount = getVisibleNews().length;
+  var hiddenCount = newsItems.length - visibleCount;
+  if (!showAllNews && hiddenCount > 0) {
+    var btn = document.createElement('button');
+    btn.className = 'news-load-more';
+    btn.id = 'news-load-more-btn';
+    btn.innerHTML = '📰 Xem thêm <span class="nlm-count">+' + hiddenCount + ' bài</span> ▾';
+    btn.onclick = function() {
+      showAllNews = true;
+      renderNews();
+    };
+    list.parentNode.insertBefore(btn, list.nextSibling);
+  }
+}
+
+function renderComments(comments, newsId) {
+  if (!comments.length) return '';
+  return comments.sort(function(a,b){return a.createdAt-b.createdAt;}).map(function(c) {
+    return '<div class="news-comment-item">'
+      + '<div class="news-comment-avatar" style="width:32px;height:32px;font-size:13px;flex-shrink:0">' + (c.author||'?').slice(-1).toUpperCase() + '</div>'
+      + '<div class="news-comment-bubble">'
+      + '<div class="news-comment-name">' + (c.author||'Ẩn danh') + '</div>'
+      + '<div class="news-comment-text">' + c.text + '</div>'
+      + '</div></div>'
+      + '<div class="news-comment-time">' + timeSinceNews(c.createdAt) + '</div>';
+  }).join('');
+}
+
+function toggleComments(newsId) {
+  const el = document.getElementById('ncmts-' + newsId);
+  if (!el) return;
+  const showing = el.style.display !== 'none';
+  el.style.display = showing ? 'none' : 'block';
+  if (!showing) {
+    const inp = document.getElementById('ncmtinp-' + newsId);
+    if (inp) inp.focus();
+    // Cập nhật avatar với tên khách hiện tại
+    const av = document.getElementById('ncmtav-' + newsId);
+    if (av) av.textContent = customer.name ? customer.name.slice(-1).toUpperCase() : '?';
+  }
+}
+
+function cmtKeydown(e, el) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); postComment(el.getAttribute('data-nid')); }
+}
+
+function postComment(newsId) {
+  if (!customer.name) { alert('Vui lòng đăng nhập để bình luận!'); return; }
+  const inp = document.getElementById('ncmtinp-' + newsId);
+  if (!inp) return;
+  const text = inp.value.trim();
+  if (!text) return;
+  const cmtId = 'cmt_' + Date.now();
+  const newsItem = newsItems.find(n => n.id === newsId);
+  const postTitle = newsItem
+    ? (newsItem.title || (newsItem.content ? newsItem.content.slice(0,60) + (newsItem.content.length > 60 ? '...' : '') : '(Khong co tieu de)'))
+    : newsId;
+  db.ref('news/' + newsId + '/comments/' + cmtId).set({
+    id: cmtId,
+    author: customer.name,
+    phone: customer.phone || '',
+    text: text,
+    createdAt: Date.now(),
+  }).then(() => {
+    const sep = '━━━━━━━━━━━━━━━━━━━';
+    const msg = [
+      '💬 BINH LUAN MOI – MsHuongShop',
+      sep,
+      '👤 ' + customer.name + (customer.phone ? '  |  📞 ' + customer.phone : ''),
+      '📰 Bai: "' + postTitle + '"',
+      sep,
+      '"' + text + '"',
+      sep,
+      '⏰ ' + new Date().toLocaleString('vi-VN'),
+    ].join('\n');
+    const params = new URLSearchParams({chat_id: CHAT2_ID, text: msg});
+    fetch('https://api.telegram.org/bot' + BOT2_TOKEN + '/sendMessage?' + params).catch(() => {});
+  });
+  inp.value = '';
+}
+
+// Like system — 1 lần/thiết bị dùng localStorage deviceId
+function getDeviceId() {
+  let id = localStorage.getItem('mshuong_device_id');
+  if (!id) { id = 'dev_' + Date.now() + '_' + Math.random().toString(36).slice(2); localStorage.setItem('mshuong_device_id', id); }
+  return id;
+}
+function getLikedNews() {
+  try { return JSON.parse(localStorage.getItem('mshuong_liked_news')||'[]'); } catch(e) { return []; }
+}
+function setLikedNews(arr) {
+  try { localStorage.setItem('mshuong_liked_news', JSON.stringify(arr)); } catch(e) {}
+}
+function toggleLike(newsId) {
+  if (!customer.name) { alert('Vui lòng đăng nhập để thích bài!'); return; }
+  const liked = getLikedNews();
+  const idx = liked.indexOf(newsId);
+  const isLiking = idx === -1;
+  // Chặn: đã like rồi không like lại được
+  if (!isLiking) {
+    liked.splice(idx, 1);
+    setLikedNews(liked);
+    const item = newsItems.find(function(n){return n.id===newsId;});
+    const newCount = Math.max(0, (item ? item.likes||0 : 0) - 1);
+    db.ref('news/'+newsId+'/likes').set(newCount);
+    updateLikeUI(newsId, newCount);
+    return;
+  }
+  liked.push(newsId);
+  setLikedNews(liked);
+  const item = newsItems.find(function(n){return n.id===newsId;});
+  const newCount = (item ? item.likes||0 : 0) + 1;
+  db.ref('news/'+newsId+'/likes').set(newCount);
+  updateLikeUI(newsId, newCount);
+}
+function updateLikeUI(newsId, count) {
+  const liked = getLikedNews();
+  const isLiked = liked.includes(newsId);
+  const btn = document.getElementById('nlike-'+newsId);
+  const statEl = document.getElementById('nlstat-'+newsId);
+  if (btn) { btn.classList.toggle('liked', isLiked); btn.innerHTML = (isLiked ? '❤️' : '🤍') + ' Thích'; }
+  if (statEl) statEl.textContent = count > 0 ? '❤️ '+count+' lượt thích' : '';
+}
+function newsImgClick(el) {
+  const newsId = el.getAttribute('data-nid');
+  const idx = parseInt(el.getAttribute('data-idx')) || 0;
+  openNewsImg(el.src, newsId, idx);
+}
+function openNewsImg(url, newsId, startIdx) {
+  const item = newsItems.find(function(n){return n.id===newsId;});
+  lbImages = item ? (item.images || (item.image ? [item.image] : [])).filter(Boolean) : [url];
+  lbIndex = startIdx || 0;
+  document.getElementById('lb-name').textContent = 'MsHuong Shop';
+  renderLightbox();
+  document.getElementById('lightbox').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function toggleNews(id) {
+  const el = document.getElementById('nc-'+id);
+  const btn = document.getElementById('nsm-'+id);
+  if (!el) return;
+  const expanded = el.classList.toggle('expanded');
+  if (btn) btn.textContent = expanded ? 'Thu gọn ▴' : 'Xem thêm...';
+}
+
+function renderNewsAdmin() {
+  const countEl = document.getElementById('news-count');
+  const listEl  = document.getElementById('news-admin-list');
+  if (countEl) countEl.textContent = newsItems.length;
+  if (!listEl) return;
+  if (!newsItems.length) {
+    listEl.innerHTML = '<div style="text-align:center;color:var(--muted);padding:16px;font-size:13px">Chưa có tin nào</div>';
+    return;
+  }
+  listEl.innerHTML = newsItems.map(n => {
+    const timeStr = new Date(n.createdAt).toLocaleDateString('vi-VN');
+    return `<div class="news-admin-item">
+      ${n.image ? `<div class="news-admin-thumb"><img src="${n.image}"></div>` : `<div class="news-admin-thumb">📢</div>`}
+      <div class="news-admin-item-info">
+        <div class="news-admin-item-title">${n.title||'(Không có tiêu đề)'}</div>
+        <div class="news-admin-item-preview">${n.content||''}</div>
+        <div style="font-size:10px;color:#bbb;margin-top:2px">${timeStr}</div>
+      </div>
+      <button class="btn-del" onclick="deleteNews('${n.id}')">🗑️</button>
+    </div>`;
+  }).join('');
+}
+
+function triggerNewsImg() {
+  document.getElementById('news-img-file').value = '';
+  document.getElementById('news-img-file').click();
+}
+
+async function handleNewsImgUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const slot = document.getElementById('news-img-slot');
+  slot.innerHTML = '<span style="font-size:12px;color:#999">⏳</span>';
+  try {
+    const IMGBB_KEY = '596ccf3842830fc7dee77cbb070dee9d';
+    const formData = new FormData();
+    formData.append('image', file);
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {method:'POST',body:formData});
+    const data = await res.json();
+    if (!data.success) throw new Error('ImgBB lỗi');
+    newsImgUrl = data.data.url;
+    slot.className = 'img-slot filled';
+    slot.innerHTML = `<img src="${newsImgUrl}"><button class="slot-del" onclick="removeNewsImg(event)">✕</button>`;
+  } catch(err) {
+    alert('Upload ảnh thất bại!\n'+err.message);
+    slot.innerHTML = '<span class="slot-add">＋</span>';
+    newsImgUrl = null;
+  }
+  input.value = '';
+}
+
+function removeNewsImg(e) {
+  e.stopPropagation();
+  newsImgUrl = null;
+  const slot = document.getElementById('news-img-slot');
+  slot.className = 'img-slot';
+  slot.innerHTML = '<span class="slot-add">＋</span>';
+}
+
+function postNews() {
+  const title   = document.getElementById('news-title-inp').value.trim();
+  const cnt     = document.getElementById('news-content-inp').value.trim();
+  if (!title && !cnt) { alert('Vui lòng nhập tiêu đề hoặc nội dung!'); return; }
+  const images = newsImgSlots.filter(Boolean);
+  const id = 'news_' + Date.now();
+  db.ref('news/' + id).set({
+    id: id,
+    title: title,
+    content: cnt,
+    images: images.length ? images : null,
+    image: images[0] || null,
+    video: newsVideoUrl || null,
+    createdAt: Date.now(),
+    likes: 0,
+  }).then(function() {
+    document.getElementById('news-title-inp').value = '';
+    document.getElementById('news-content-inp').value = '';
+    newsImgSlots = [null,null,null,null];
+    newsVideoUrl = null;
+    renderNewsImgSlots();
+    renderNewsVideoSlot();
+  });
+}
+
+function deleteNews(id) {
+  if (!confirm('Xoá tin này?')) return;
+  db.ref('news/' + id).remove();
+}
+
+// ── CHIP CHIP TOGGLE ─────────────────────────────────────────────
+let chipChipOpen = false;
+
+function toggleChipChip() {
+  chipChipOpen = !chipChipOpen;
+  var btn    = document.getElementById('chipchip-btn');
+  var expand = document.getElementById('chipchip-expand');
+  var badge  = document.getElementById('chipchip-new-badge');
+  if (btn)    btn.classList.toggle('open', chipChipOpen);
+  if (expand) expand.classList.toggle('open', chipChipOpen);
+  if (badge && chipChipOpen) badge.classList.remove('show');
+  updateChipChipSub();
+}
+
+function updateChipChipSub() {
+  var sub = document.getElementById('chipchip-sub');
+  if (!sub) return;
+  if (!newsItems.length) {
+    sub.textContent = 'Chưa có bài đăng nào';
+    return;
+  }
+  var latest = newsItems[0];
+  var preview = latest.title || (latest.content ? latest.content.slice(0,40) + '...' : '');
+  sub.textContent = newsItems.length + ' bài · ' + preview;
+}
+
+// News helper click handlers (tránh quotes lồng nhau trong HTML)
+function newsToggleClick(el) { toggleNews(el.getAttribute('data-nid')); }
+function newsToggleComments(el) { toggleComments(el.getAttribute('data-nid')); }
+function newsLikeClick(el) { toggleLike(el.getAttribute('data-nid')); }
+function newsPostComment(el) { postComment(el.getAttribute('data-nid')); }
 
 // ── FEEDBACK ─────────────────────────────────────────────────────
 const BOT2_TOKEN = '8776010479:AAFAaKWJHj1oorwfucNEaP8p2Axgn2gK2Ko';

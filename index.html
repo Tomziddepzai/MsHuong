@@ -857,6 +857,13 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
         </div>
         <div class="admin-section">
           <div class="admin-section-title">📦 Danh sách sản phẩm (<span id="product-count">0</span>)</div>
+          <div id="migrate-cat-wrap" style="margin-bottom:10px;display:none">
+            <button onclick="migrateCategoryNames()" id="btn-migrate-cat"
+              style="width:100%;padding:10px;background:#fff0e6;border:2px solid var(--primary);border-radius:10px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--primary);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;touch-action:manipulation">
+              🔄 Cập nhật tên danh mục cũ (<span id="migrate-cat-count">0</span> sản phẩm)
+            </button>
+            <div id="migrate-cat-log" style="margin-top:8px;font-size:11px;color:var(--muted);line-height:1.8;display:none"></div>
+          </div>
           <div id="migrate-wrap" style="margin-bottom:10px;display:none">
             <button onclick="migrateAllImages()" id="btn-migrate"
               style="width:100%;padding:10px;background:#fff8e6;border:2px solid #FFD166;border-radius:10px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:#b8860b;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;touch-action:manipulation">
@@ -1108,6 +1115,7 @@ db.ref('products').on('value', snap => {
   renderCatPills();
   if (document.getElementById('admin-panel').classList.contains('show')) renderAdminList();
   checkMigrateNeeded();
+  checkMigrateCatNeeded();
 });
 
 function getProductImages(p) {
@@ -2137,6 +2145,7 @@ openAdmin = function(){
   if(aptCP) aptCP.textContent = products.length;
   startOrderListener();
   checkMigrateNeeded();
+  checkMigrateCatNeeded();
 };
 
 // ── MIGRATE ẢNH CŨ SANG IMGBB ────────────────────────────────────
@@ -2222,6 +2231,44 @@ async function migrateAllImages() {
 }
 
 
+
+// ── MIGRATE CATEGORY NAMES ──────────────────────────────────────
+const CATEGORY_RENAME_MAP = {
+  'Vở & Sổ': 'Sổ & Vở',
+  'Dụng cụ học tập': 'Đồ dùng học tập',
+  'BALO THEO TREND': 'BALO xinh Nam/Nữ',
+};
+
+function checkMigrateCatNeeded() {
+  const needed = products.filter(p => CATEGORY_RENAME_MAP[p.cat]);
+  const wrap = document.getElementById('migrate-cat-wrap');
+  const cnt  = document.getElementById('migrate-cat-count');
+  if (wrap) wrap.style.display = needed.length > 0 ? 'block' : 'none';
+  if (cnt)  cnt.textContent = needed.length;
+}
+
+async function migrateCategoryNames() {
+  const btn = document.getElementById('btn-migrate-cat');
+  const log = document.getElementById('migrate-cat-log');
+  if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
+  if (log) { log.style.display = 'block'; log.innerHTML = '⏳ Đang cập nhật...'; }
+  const toMigrate = products.filter(p => CATEGORY_RENAME_MAP[p.cat]);
+  let okCount = 0, failCount = 0;
+  for (const p of toMigrate) {
+    const newCat = CATEGORY_RENAME_MAP[p.cat];
+    try {
+      await db.ref('products/' + p.id + '/cat').set(newCat);
+      if (log) log.innerHTML += '<br>✅ ' + p.name + ' → ' + newCat;
+      okCount++;
+    } catch(e) {
+      if (log) log.innerHTML += '<br>❌ ' + p.name + ': ' + e.message;
+      failCount++;
+    }
+  }
+  if (log) log.innerHTML += '<br><br>✅ Xong! ' + okCount + ' sản phẩm' + (failCount ? ', lỗi: ' + failCount : '');
+  if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+  checkMigrateCatNeeded();
+}
 // ── CATEGORY FILTER ───────────────────────────────────────────────
 let activeCategory = null;
 let catDropOpen = false;

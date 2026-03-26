@@ -663,9 +663,9 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
 <div class="chipchip-btn-wrap">
   <button class="chipchip-btn" id="chipchip-btn" onclick="toggleChipChip()">
     <div class="chipchip-btn-left">
-      <div class="chipchip-btn-icon">💌</div>
+      <div class="chipchip-btn-icon">📣</div>
       <div class="chipchip-btn-texts">
-        <div class="chipchip-btn-title">CHUYỆN CỦA SHOP 🧸</div>
+        <div class="chipchip-btn-title">Chuyện Của Chip Chip</div>
         <div class="chipchip-btn-sub" id="chipchip-sub">Tin tức & câu chuyện từ shop</div>
       </div>
     </div>
@@ -820,7 +820,9 @@ header{background:var(--dark);padding:0 24px;display:flex;align-items:center;jus
             <input class="a-input" id="a-emoji" placeholder="Emoji (VD: 🖊️)" />
             <select class="a-select" id="a-cat">
               <option value="Bút & Viết">✏️ Bút & Viết</option>
-              <option value="Dụng cụ học tập">📐 Dụng cụ học tập</option>
+              <option value="Sổ & Vở">📓 Sổ & Vở</option>
+              <option value="BALO xinh Nam/Nữ">🎒 BALO xinh Nam/Nữ</option>
+              <option value="Đồ dùng học tập">📐 Đồ dùng học tập</option>
               <option value="HOT TREND">🔥 HOT TREND</option>
               <option value="FLASH SALE 21/03">⚡ FLASH SALE 21/03</option>
             </select>
@@ -1064,22 +1066,23 @@ const DEFAULT_PRODUCTS = [
   {id:2, name:'Bút chì 2B Staedtler',            price:8000,  unit:'cái',   emoji:'✏️',cat:'Bút & Viết',      stock:30,image:null,colors:[]},
   {id:3, name:'Bút màu Faber-Castell 12 màu',    price:45000, unit:'hộp',   emoji:'🖍️',cat:'Bút & Viết',      stock:20,image:null,colors:[]},
   {id:4, name:'Bút mực Hồng Hà nét thanh',       price:12000, unit:'cái',   emoji:'🖋️',cat:'Bút & Viết',      stock:0,image:null,colors:[{name:'Đỏ',stock:15},{name:'Xanh dương',stock:15},{name:'Tím',stock:10}]},
-  {id:5, name:'Vở 200 trang Ánh Dương kẻ ngang', price:18000, unit:'quyển', emoji:'📓',cat:'Vở & Sổ',         stock:0,image:null,colors:[{name:'Đỏ',stock:5},{name:'Xanh dương',stock:5},{name:'Xanh lá',stock:5},{name:'Vàng',stock:5},{name:'Hồng',stock:5}]},
-  {id:6, name:'Vở 100 trang Oxford ô li',         price:12000, unit:'quyển', emoji:'📔',cat:'Vở & Sổ',         stock:0,image:null,colors:[{name:'Đỏ',stock:12},{name:'Xanh dương',stock:12},{name:'Xanh lá',stock:11}]},
-  {id:7, name:'Sổ tay bìa cứng A5',               price:35000, unit:'quyển', emoji:'📒',cat:'Vở & Sổ',         stock:15,image:null,colors:[]},
-  {id:8, name:'Tập bìa nhựa A4 10 tờ',            price:22000, unit:'bộ',    emoji:'📋',cat:'Vở & Sổ',         stock:0,image:null,colors:[{name:'Đỏ',stock:7},{name:'Xanh dương',stock:7},{name:'Vàng',stock:6}]},
-  {id:9, name:'Thước kẻ 30cm Điền Phú',           price:7000,  unit:'cái',   emoji:'📐',cat:'Dụng cụ học tập', stock:0,image:null,colors:[{name:'Xanh dương',stock:15},{name:'Đỏ',stock:15},{name:'Xanh lá',stock:15}]},
-  {id:10,name:'Thước đo độ + êke bộ 3',           price:15000, unit:'bộ',    emoji:'📏',cat:'Dụng cụ học tập', stock:20,image:null,colors:[]},
-  {id:11,name:'Kéo học sinh cán nhựa',             price:20000, unit:'cái',   emoji:'✂️',cat:'Dụng cụ học tập', stock:0,image:null,colors:[{name:'Đỏ',stock:4},{name:'Xanh dương',stock:4},{name:'Xanh lá',stock:4},{name:'Vàng',stock:3},{name:'Cam',stock:3}]},
-  {id:12,name:'Bìa kẹp tài liệu A4',              price:25000, unit:'cái',   emoji:'🗂️',cat:'Dụng cụ học tập', stock:22,image:null,colors:[]},
+  {id:5, name:'Vở 200 trang Ánh Dương kẻ ngang', price:18000, unit:'quyển', emoji:'📓',cat:'Sổ & Vở',         stock:0,image:null,colors:[{name:'Đỏ',stock:5},{name:'Xanh dương',stock:5},{name:'Xanh lá',stock:5},{name:'Vàng',stock:5},{name:'Hồng',stock:5}]},
+  {id:6, name:'Vở 100 trang Oxford ô li',         price:12000, unit:'quyển', emoji:'📔',cat:'Sổ & Vở',         stock:0,image:null,colors:[{name:'Đỏ',stock:12},{name:'Xanh dương',stock:12},{name:'Xanh lá',stock:11}]},
+  {id:7, name:'Sổ tay bìa cứng A5',               price:35000, unit:'quyển', emoji:'📒',cat:'Sổ & Vở',         stock:15,image:null,colors:[]},
+  {id:8, name:'Tập bìa nhựa A4 10 tờ',            price:22000, unit:'bộ',    emoji:'📋',cat:'Sổ & Vở',         stock:0,image:null,colors:[{name:'Đỏ',stock:7},{name:'Xanh dương',stock:7},{name:'Vàng',stock:6}]},
+  {id:9, name:'Thước kẻ 30cm Điền Phú',           price:7000,  unit:'cái',   emoji:'📐',cat:'Đồ dùng học tập', stock:0,image:null,colors:[{name:'Xanh dương',stock:15},{name:'Đỏ',stock:15},{name:'Xanh lá',stock:15}]},
+  {id:10,name:'Thước đo độ + êke bộ 3',           price:15000, unit:'bộ',    emoji:'📏',cat:'Đồ dùng học tập', stock:20,image:null,colors:[]},
+  {id:11,name:'Kéo học sinh cán nhựa',             price:20000, unit:'cái',   emoji:'✂️',cat:'Đồ dùng học tập', stock:0,image:null,colors:[{name:'Đỏ',stock:4},{name:'Xanh dương',stock:4},{name:'Xanh lá',stock:4},{name:'Vàng',stock:3},{name:'Cam',stock:3}]},
+  {id:12,name:'Bìa kẹp tài liệu A4',              price:25000, unit:'cái',   emoji:'🗂️',cat:'Đồ dùng học tập', stock:22,image:null,colors:[]},
 ];
 
 const CATEGORIES = [
-  {key:'FLASH SALE 21/03', icon:'⚡'},
-  {key:'Bút & Viết',      icon:'✏️'},
-  {key:'Vở & Sổ',         icon:'📓'},
-  {key:'Dụng cụ học tập', icon:'📐'},
-  {key:'HOT TREND',       icon:'🔥'},
+  {key:'FLASH SALE 21/03',   icon:'⚡'},
+  {key:'Bút & Viết',         icon:'✏️'},
+  {key:'Sổ & Vở',            icon:'📓'},
+  {key:'BALO xinh Nam/Nữ',   icon:'🎒'},
+  {key:'Đồ dùng học tập',    icon:'📐'},
+  {key:'HOT TREND',          icon:'🔥'},
 ];
 
 let products = [];
